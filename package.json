@@ -1,0 +1,21 @@
+{
+  "name": "midterm-fridgefy-app-group-b",
+  "version": "1.0.0",
+  "description": "Welcome to **Fridgefy**!\r It is a React.js + Node.js web app that allows you to store your recipes and ingredients that you have in a fridge.\r Recipes can be filtered by ingredients, cuisine, diet, intolerance, and more.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "backend": "",
+    "frontend":"cd frontend && npm run dev",
+    "dev": "concurrently \"npm run backend\"  \"npm run frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

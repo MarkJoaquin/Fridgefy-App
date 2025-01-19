@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  name           String           @map("name")
+  email          String           @unique @map("email")
+  password       String           @map("password")
+  fridges        Fridge[]         @relation("UserFridge")         // RELATION WITH THE INGREDIENTS FROM THE FRISGE
+  shoppingItems  ShoppingItems[]  @relation("UserShoppingItems")  // RELATION SHOPPING LIST
+  recipes        Recipe[]         @relation("UserRecipes")        // RALATION RECIPES SAVED BY USER
+
+  @@map("user")
+}
+
+model Fridge {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  ingredient   String      @map("ingredient")
+  userId       String      @db.ObjectId
+  user         User        @relation("UserFridge", fields: [userId], references: [id])
+
+  @@map("fridge")
+}
+
+model ShoppingItems {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  ingredient   String      @map("ingredient")
+  userId       String      @db.ObjectId
+  user         User        @relation("UserShoppingItems", fields: [userId], references: [id])
+
+  @@map("shopping_items")
+}
+
+model Recipe {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  recipeId     String      @unique                                          // ID FOR THE RECIPE COMMING FROM API
+  userId       String      @db.ObjectId
+  user         User        @relation("UserRecipes", fields: [userId], references: [id])
+
+  @@map("recipes")
+}
