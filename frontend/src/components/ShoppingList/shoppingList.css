@@ -1,0 +1,116 @@
+/* Shopping List styles */
+.shopping-list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+}
+
+/* Fridge styles */
+
+.input-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-container input {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.input-container button {
+    padding: 0.75rem 1.5rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.input-container button:hover {
+    background-color: #45a049;
+}
+
+.list-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-container li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.list-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.list-container button:hover {
+    opacity: 1;
+} 
+
+/* Recipes styles */
+
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.recipe-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.recipe-info {
+    flex: 1;
+    padding-right: 1rem;
+}
+
+.recipe-title {
+    margin: 0 0 0.5rem 0;
+}
+
+.recipe-image {
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.recipe-ingredients {
+    margin-top: 1rem;
+}
+
+.recipe-ingredients h4 {
+    margin-bottom: 0.5rem;
+}
+
+.recipe-ingredients ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.recipe-ingredients li {
+    margin-bottom: 0.25rem;
+}
