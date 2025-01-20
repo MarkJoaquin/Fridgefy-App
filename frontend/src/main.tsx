@@ -10,6 +10,7 @@ import { dark } from "@clerk/themes";
 import SingIn from "./components/SingIn/index.tsx";
 import SignUp from "./components/Sigup/index.tsx";
 import NonSignedInRecipes from "./components/NonSignedInRecipes/index.tsx";
+import ShoppingList from "./components/ShoppingList/shoppingList.tsx";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_PUBLISHABLE_KEY;
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/recipes",
         element: <NonSignedInRecipes />,
+      },
+      {
+        path: "/shoppingList",
+        element: <ShoppingList />,
       },
       {
         path: "/",
