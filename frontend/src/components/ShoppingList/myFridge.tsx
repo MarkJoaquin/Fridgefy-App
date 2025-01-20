@@ -1,4 +1,5 @@
 import React from 'react';
+import "./shoppingList.css";
 
 interface Recipe {
     ingredients: string[];

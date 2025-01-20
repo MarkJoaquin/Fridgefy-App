@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './shoppingList.css';  // Asegúrate de importar los estilos
+import './shoppingList.css';
 
 const RecipesList = () => {
     const [recipes, setRecipes] = useState<any[]>([]);
