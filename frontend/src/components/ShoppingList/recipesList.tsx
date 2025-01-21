@@ -38,13 +38,13 @@ const RecipesList = () => {
                                     className="delete-button"
                                     onClick={(e) => handleDeleteRecipe(e, recipe.id)}
                                 >
-                                    Eliminar
+                                    Delete
                                 </button>
                             </div>
                             <p>{recipe.cuisine}</p>
                             {selectedRecipe?.id === recipe.id && (
                                 <div className="recipe-ingredients">
-                                    <h4>Ingredientes:</h4>
+                                    <h4>Ingredients:</h4>
                                     <ul>
                                         {recipe.ingredients.map((ingredient: string, index: number) => (
                                             <li key={index}>{ingredient}</li>
@@ -57,11 +57,11 @@ const RecipesList = () => {
                                             setShowInstructions(showInstructions === recipe.id ? null : recipe.id);
                                         }}
                                     >
-                                        {showInstructions === recipe.id ? 'Ocultar Instrucciones' : 'Ver Instrucciones'}
+                                        {showInstructions === recipe.id ? 'Hide Instructions' : 'View Instructions'}
                                     </button>
                                     {showInstructions === recipe.id && (
                                         <div className="recipe-instructions">
-                                            <h4>Instrucciones:</h4>
+                                            <h4>Instructions:</h4>
                                             <p>{recipe.instructions}</p>
                                         </div>
                                     )}
