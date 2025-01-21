@@ -8,8 +8,8 @@
   },
   "scripts": {
     "backend": "cd backend && npm run dev",
-    "frontend": "cd frontend && npm run dev",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "frontend":"cd frontend && npm run dev",
+    "dev": "concurrently \"npm run backend\"  \"npm run frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

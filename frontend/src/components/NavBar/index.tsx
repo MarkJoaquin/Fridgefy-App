@@ -3,6 +3,7 @@ import styled from "styled-components";
 import icon from "../../assets/icon.svg";
 import { UserButton, useUser } from "@clerk/clerk-react";
 import { dark } from "@clerk/themes";
+import SaveUserOnLogin from "../SaveUserOnLogin";
 
 const Nav = styled.nav`
   font-family: "Poppins", sans-serif;
@@ -59,6 +60,7 @@ const StyledNavLink = styled(NavLink)`
 
 const Navbar = () => {
   const user = useUser();
+  // console.log(user);
 
   return (
     <Nav>
@@ -69,7 +71,9 @@ const Navbar = () => {
       </Ul>
       <Ul>
         {user.isSignedIn ? (
+          
           <StyledNavLink to="/shoppingList">
+            <SaveUserOnLogin />
             <li>Shopping List</li>
           </StyledNavLink>
         ) : (
