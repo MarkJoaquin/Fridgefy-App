@@ -16,6 +16,11 @@ const RecipesList = () => {
         setSelectedRecipe(selectedRecipe?.id === recipe.id ? null : recipe);
     };
 
+    const handleDeleteRecipe = (e: React.MouseEvent, recipeId: number) => {
+        e.stopPropagation();
+        setRecipes(recipes.filter(recipe => recipe.id !== recipeId));
+    };
+
     return (
         <div>
             <h1>Recipes List</h1>
@@ -27,7 +32,15 @@ const RecipesList = () => {
                         onClick={() => handleRecipeClick(recipe)}
                     >
                         <div className="recipe-info">
-                            <h3 className="recipe-title">{recipe.name}</h3>
+                            <div className="recipe-header">
+                                <h3 className="recipe-title">{recipe.name}</h3>
+                                <button 
+                                    className="delete-button"
+                                    onClick={(e) => handleDeleteRecipe(e, recipe.id)}
+                                >
+                                    Eliminar
+                                </button>
+                            </div>
                             <p>{recipe.cuisine}</p>
                             {selectedRecipe?.id === recipe.id && (
                                 <div className="recipe-ingredients">
