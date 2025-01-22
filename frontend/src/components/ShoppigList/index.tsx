@@ -171,9 +171,7 @@ const RecipesList = () => {
       const data = await response.json();
       console.log("Data from backend", data.recipes);
       setRecipes(data.recipes);
-      console.log("Recipes successfully fetched", recipes);
     } catch (error) {
-      console.log("Error fetching recipes:", error);
     }
   };
 
@@ -182,7 +180,6 @@ const RecipesList = () => {
   }, []);
 
   const recipesFromStore = useSelector(selectRecipes);
-  console.log("Recipes from store", recipesFromStore.recipes);
 
   const getIntersection = (
     recipes: UserRecipe[],
@@ -192,15 +189,9 @@ const RecipesList = () => {
       recipesFromStore.map((recipe) => String(recipe.id))
     );
     const userRecipeIds = new Set(recipes.map((recipe) => recipe.recipeId));
-    console.log("Store IDs", storeIds);
-    console.log("Recipes", userRecipeIds);
     return Array.from(userRecipeIds).filter((id) => storeIds.has(id));
   };
-
   const recipesInCommon = getIntersection(recipes, recipesFromStore.recipes);
-
-  console.log("Recipes In Common", recipesInCommon);
-
   const recipesToDisplay = recipesInCommon.map((recipeId) => {
     const recipe = recipesFromStore.recipes.find(
       (recipe) => String(recipe.id) === recipeId
@@ -208,7 +199,34 @@ const RecipesList = () => {
     return recipe;
   });
 
-  console.log("Recipes to display", recipesToDisplay);
+
+  const handleRemoveRecipe = async (recipeId: string) => {
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+
+    if (!userEmail) return;
+
+    try {
+      const response = await fetch('http://localhost:3000/removeRecipe', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          recipeId: recipeId.toString(),
+          userEmail: userEmail
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to remove recipe');
+      }
+
+      fetchRecipes();
+    } catch (error) {
+      console.error('Error removing recipe:', error);
+    }
+  };
 
   return (
     <div>
@@ -237,7 +255,7 @@ const RecipesList = () => {
               <div className="button-group">
                 <button>View Recipe</button>
                 <button>Add missing ingredients to Shopping List</button>
-                <button>Remove Recipe</button>
+                <button onClick={() => handleRemoveRecipe(recipe!.id)}>Remove Recipe</button>
               </div>
             </details>
           ))
