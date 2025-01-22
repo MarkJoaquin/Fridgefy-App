@@ -3,7 +3,6 @@ import MyFridge from "./myFridge";
 import RecipesList from "./index";
 import "./shoppingList.css";
 
-
 const ShoppingList = () => {
     return (
         <div className="shopping-list">

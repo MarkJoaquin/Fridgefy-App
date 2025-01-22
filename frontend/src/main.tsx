@@ -40,10 +40,6 @@ const router = createBrowserRouter([
         element: <RecipeList />,
       },
       {
-        path: "/shoppingList",
-        element: <ShoppingList />,
-      },
-      {
         path: "/",
         element: <Hero />,
       },
