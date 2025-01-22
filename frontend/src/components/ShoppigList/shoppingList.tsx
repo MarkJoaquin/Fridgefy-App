@@ -1,8 +1,7 @@
 import ItemsToBuy from "./itemsToBuy";
 import MyFridge from "./myFridge";
-import RecipesList from "./recipesList";
+import RecipesList from "./index";
 import "./shoppingList.css";
-
 
 const ShoppingList = () => {
     return (
