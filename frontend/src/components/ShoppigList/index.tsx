@@ -149,7 +149,7 @@ type UserRecipe = {
   recipeId: string;
 };
 
-const ShoppingList = () => {
+const recipeList = () => {
   const [recipes, setRecipes] = useState([]);
   const { user } = useUser();
 
@@ -256,4 +256,4 @@ const ShoppingList = () => {
   );
 };
 
-export default ShoppingList;
+export default recipeList;
