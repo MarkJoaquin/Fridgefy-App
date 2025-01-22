@@ -72,7 +72,7 @@ const Navbar = () => {
       <Ul>
         {user.isSignedIn ? (
           
-          <StyledNavLink to="/shoppingList">
+          <StyledNavLink to="/shopping-list">
             <SaveUserOnLogin />
             <li>Shopping List</li>
           </StyledNavLink>

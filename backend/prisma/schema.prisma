@@ -45,7 +45,7 @@ model ShoppingItems {
 
 model Recipe {
   id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  recipeId     String      @unique                                          // ID FOR THE RECIPE COMMING FROM API
+  recipeId     String                                                     // ID FOR THE RECIPE COMMING FROM API
   userId       String      @db.ObjectId
   user         User        @relation("UserRecipes", fields: [userId], references: [id])
 
