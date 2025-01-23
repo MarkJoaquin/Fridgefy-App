@@ -5,17 +5,10 @@ interface Recipe {
 }
 
 const MyFridge = () => {
-    const [items, setItems] = React.useState<string[]>(() => {
-        const savedItems = localStorage.getItem('fridgeItems');
-        return savedItems ? JSON.parse(savedItems) : [];
-    });
+    const [items, setItems] = React.useState<string[]>([]);
     const [availableIngredients, setAvailableIngredients] = React.useState<string[]>([]);
     const [selectedIngredient, setSelectedIngredient] = React.useState('');
     const [error, setError] = React.useState('');
-
-    React.useEffect(() => {
-        localStorage.setItem('fridgeItems', JSON.stringify(items));
-    }, [items]);
 
     React.useEffect(() => {
         fetch('https://dummyjson.com/recipes?limit=0')
@@ -31,22 +24,11 @@ const MyFridge = () => {
     }, []);
 
     const handleAddItem = () => {
-        if (selectedIngredient === '') {
-            return;
-        }
         
-        if (availableIngredients.includes(selectedIngredient)) {
-            setItems([...items, selectedIngredient]);
-            setSelectedIngredient('');
-            setError('');
-        } else {
-            setError('Please select a valid ingredient from the list');
-        }
     };
 
-    const handleRemoveItem = (index: number) => {
-        const newItems = items.filter((_, i) => i !== index);
-        setItems(newItems);
+    const handleRemoveItem = () => {
+        
     };
 
     return (
@@ -75,7 +57,7 @@ const MyFridge = () => {
                     {items.map((item, index) => (
                         <li key={index}>
                             {item}
-                            <button onClick={() => handleRemoveItem(index)}>❌</button>
+                            <button onClick={() => handleRemoveItem()}>❌</button>
                         </li>
                     ))}
                 </ul>
