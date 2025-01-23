@@ -178,7 +178,7 @@ const ShoppingList = () => {
       const data = await response.json();
       console.log("Data from backend", data.recipes);
       setRecipes(data.recipes);
-      console.log("Recipes successfully fetched", recipes);
+
     } catch (error) {
       console.log("Error fetching recipes:", error);
     }
@@ -191,20 +191,7 @@ const ShoppingList = () => {
   const recipesFromStore = useSelector(selectRecipes);
   console.log("Recipes from store", recipesFromStore.recipes);
 
-  const getIntersection = (
-    recipes: UserRecipe[],
-    recipesFromStore: Recipe[]
-  ) => {
-    const storeIds = new Set(
-      recipesFromStore.map((recipe) => String(recipe.id))
-    );
-    const userRecipeIds = new Set(recipes.map((recipe) => recipe.recipeId));
-    console.log("Store IDs", storeIds);
-    console.log("Recipes", userRecipeIds);
-    return Array.from(userRecipeIds).filter((id) => storeIds.has(id));
-  };
-
-  const recipesInCommon = getIntersection(recipes, recipesFromStore.recipes);
+  const recipesInCommon = Array.from(new Set(recipes.map((item: UserRecipe) => item.recipeId)))
 
   console.log("Recipes In Common", recipesInCommon);
 
