@@ -6,15 +6,15 @@ import { dark } from "@clerk/themes";
 import SaveUserOnLogin from "../SaveUserOnLogin";
 
 const Nav = styled.nav`
-  font-family: "Poppins", sans-serif;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  background-color: #5eead4;
+  background-color: #16a54a;
   color: #141414;
 
-  padding: 1rem 1rem;
+  padding: 1rem 10rem;
 `;
 
 const LogoContainer = styled.div`
@@ -49,11 +49,11 @@ const StyledNavLink = styled(NavLink)`
   text-decoration: none;
 
   li {
-    color: #141414;
+    color: #ffffff;
   }
 
   &.active li {
-    color: #141414;
+    color: #ffffff;
     font-weight: bold;
   }
 `;
