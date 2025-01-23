@@ -22,12 +22,6 @@ app.use('/getRecipes', recipeRouter);
 app.use('/removeRecipe', removeRecipe);
 
 app.use('/myFridge', fridgeRouter);
-app.use('/myFridge/post', fridgeRouter);
-app.use('/myFridge/get', fridgeRouter);
-app.use('/myFridge/delete', fridgeRouter);
-
-
-
 
 app.all("*", (req: Request, res: Response) => {
   res

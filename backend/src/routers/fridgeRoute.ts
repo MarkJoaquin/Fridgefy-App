@@ -3,8 +3,8 @@ import { myFridgeGet, myFridgeDelete, myFridgePost } from "../controllers/myFrid
 
 const router = Router();
 
-router.get("/myFridge/get", myFridgeGet);
-router.delete("/myFridge/delete", myFridgeDelete);
-router.post("/myFridge/post", myFridgePost);
+router.get("/get", myFridgeGet);
+router.delete("/delete", myFridgeDelete);
+router.post("/post", myFridgePost);
 
 export default router;
