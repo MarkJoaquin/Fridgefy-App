@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { selectRecipes } from "../../features/recipes/recipeSlice";
 
-
 const ShoppingListContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -149,9 +148,90 @@ type UserRecipe = {
   recipeId: string;
 };
 
+type Ingredient = {
+  ingredient: string;
+};
+
 const ShoppingList = () => {
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [recipes, setRecipes] = useState([]);
   const { user } = useUser();
+
+  const recipesFromStore = useSelector(selectRecipes);
+  console.log("Recipes from store", recipesFromStore.recipes);
+
+  const fetchIngredients = async () => {
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+
+    if (!userEmail) {
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/getIngredients?userEmail=${userEmail}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.log("Response", response);
+        throw new Error("Failed to fetch ingredients");
+      }
+
+      const data = await response.json();
+      console.log("Ingredients from backend", data.ingredients);
+      setIngredients(data.ingredients);
+    } catch (error) {
+      console.log("Error fetching ingredients:", error);
+    }
+  };
+
+  const saveIngredient = async (ingredients: string[], recipeId: string) => {
+
+    console.log("Ingredients to save", ingredients);
+    console.log("Recipe ID", recipeId);
+
+    const recipe = recipesFromStore.recipes.find((r) => r.id === recipeId);
+
+    console.log("Recipe", recipe?.ingredients);
+
+    const ingredientsToSave = recipe?.ingredients.filter(
+      (ingredient) =>
+        !ingredients
+          .map((i) => i.toLowerCase().trim())
+          .includes(ingredient.toLowerCase().trim())
+    );
+
+    console.log("Ingredients to save", ingredientsToSave);
+    
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+
+    if (!userEmail) {
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/saveIngredient", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userEmail, ingredientsToSave }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save ingredients");
+      }
+    } catch (error) {
+      console.log("Error saving ingredienst:", error);
+    } 
+
+  };
 
   const fetchRecipes = async () => {
     const userEmail = user?.primaryEmailAddress?.emailAddress;
@@ -178,7 +258,6 @@ const ShoppingList = () => {
       const data = await response.json();
       console.log("Data from backend", data.recipes);
       setRecipes(data.recipes);
-
     } catch (error) {
       console.log("Error fetching recipes:", error);
     }
@@ -186,12 +265,14 @@ const ShoppingList = () => {
 
   useEffect(() => {
     fetchRecipes();
+    fetchIngredients();
   }, []);
 
-  const recipesFromStore = useSelector(selectRecipes);
-  console.log("Recipes from store", recipesFromStore.recipes);
 
-  const recipesInCommon = Array.from(new Set(recipes.map((item: UserRecipe) => item.recipeId)))
+
+  const recipesInCommon = Array.from(
+    new Set(recipes.map((item: UserRecipe) => item.recipeId))
+  );
 
   console.log("Recipes In Common", recipesInCommon);
 
@@ -203,6 +284,14 @@ const ShoppingList = () => {
   });
 
   console.log("Recipes to display", recipesToDisplay);
+
+  /* Ingredients to send */
+
+
+
+  /*  Ingredients to send  */
+
+  console.log("Ingredients", ingredients);
 
   return (
     <div>
@@ -218,19 +307,36 @@ const ShoppingList = () => {
                 <ul>
                   {recipe!.ingredients.map((ingredient, index) => (
                     <li key={index}>
-                      <input type="checkbox" disabled readOnly />
+                      <input
+                        style={{ cursor: "not-allowed" }}
+                        type="checkbox"
+                        checked={ingredients
+                          .map((i) =>
+                            typeof i === "string"
+                              ? i.toLowerCase().trim()
+                              : i.ingredient.toLowerCase().trim()
+                          )
+                          .includes(ingredient.toLowerCase().trim())}
+                        readOnly
+                      />
                       {ingredient}
                     </li>
                   ))}
                 </ul>
-                <p>
+                <p
+                  style={{
+                    color: "#777",
+                    paddingTop: "15px",
+                    fontStyle: "italic",
+                  }}
+                >
                   Note: Checkboxes indicate ingredients already in your fridge
                   and are read-only.
                 </p>
               </div>
               <div className="button-group">
                 <button>View Recipe</button>
-                <button>Add missing ingredients to Shopping List</button>
+                <button onClick={() => saveIngredient(ingredients.map((ingredient) => ingredient.ingredient), recipe!.id)}>Add missing ingredients to Shopping List</button>
                 <button>Remove Recipe</button>
               </div>
             </details>

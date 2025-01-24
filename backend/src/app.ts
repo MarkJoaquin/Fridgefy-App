@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { CustomError } from "./errors/custom-error";
 import  authRouter  from "./routers/authRoute";
 import  recipeRouter  from "./routers/recipeRoute";
+import  ingredientsRouter  from "./routers/ingredientsRouter";
 import cors from "cors";
 
 export const app = express();
@@ -16,6 +17,8 @@ app.get("/", (req: Request, res: Response) => {
 app.use('/saveDataUser', authRouter);
 app.use('/saveRecipe', recipeRouter); 
 app.use('/getRecipes', recipeRouter);
+app.use('/getIngredients', ingredientsRouter )
+app.use('/saveIngredient', ingredientsRouter)
 
 app.all("*", (req: Request, res: Response) => {
   res
