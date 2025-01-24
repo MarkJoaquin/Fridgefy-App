@@ -27,6 +27,8 @@ export const removeRecipe = async (req: Request, res: Response, next: NextFuncti
             }
         });
 
+        console.log('Deleted recipes count:', result.count);
+
 
         res.status(200).json({
             status: "success",
