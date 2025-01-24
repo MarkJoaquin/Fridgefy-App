@@ -6,13 +6,6 @@ import { selectRecipes } from "../../features/recipes/recipeSlice";
 
 
 const ShoppingListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-
   h2 {
     font-size: 24px;
     margin-bottom: 20px;
@@ -149,7 +142,7 @@ type UserRecipe = {
   recipeId: string;
 };
 
-const ShoppingList = () => {
+const RecipesList = () => {
   const [recipes, setRecipes] = useState([]);
   const { user } = useUser();
 
@@ -189,7 +182,6 @@ const ShoppingList = () => {
   }, []);
 
   const recipesFromStore = useSelector(selectRecipes);
-  console.log("Recipes from store", recipesFromStore.recipes);
 
   const recipesInCommon = Array.from(new Set(recipes.map((item: UserRecipe) => item.recipeId)))
 
@@ -202,11 +194,38 @@ const ShoppingList = () => {
     return recipe;
   });
 
-  console.log("Recipes to display", recipesToDisplay);
+
+  const handleRemoveRecipe = async (recipeId: string) => {
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+
+    if (!userEmail) return;
+
+    try {
+      const response = await fetch('http://localhost:3000/removeRecipe', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          recipeId: recipeId.toString(),
+          userEmail: userEmail
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to remove recipe');
+      }
+
+      fetchRecipes();
+    } catch (error) {
+      console.error('Error removing recipe:', error);
+    }
+  };
 
   return (
     <div>
-      <h2>Shopping List</h2>
+      <h2>Recipes List</h2>
       <ShoppingListContainer>
         {recipesToDisplay.length > 0 ? (
           recipesToDisplay.map((recipe: Recipe | undefined) => (
@@ -231,7 +250,7 @@ const ShoppingList = () => {
               <div className="button-group">
                 <button>View Recipe</button>
                 <button>Add missing ingredients to Shopping List</button>
-                <button>Remove Recipe</button>
+                <button onClick={() => handleRemoveRecipe(recipe!.id)}>Remove Recipe</button>
               </div>
             </details>
           ))
@@ -243,4 +262,4 @@ const ShoppingList = () => {
   );
 };
 
-export default ShoppingList;
+export default RecipesList;
