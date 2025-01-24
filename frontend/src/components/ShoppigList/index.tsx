@@ -6,13 +6,6 @@ import { selectRecipes } from "../../features/recipes/recipeSlice";
 import { Toaster, toast } from "sonner";
 
 const ShoppingListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  max-width: 800px;
-  margin: 0 auto;
-
   h2 {
     font-size: 24px;
     margin-bottom: 20px;
@@ -287,13 +280,38 @@ const ShoppingList = () => {
     return recipe;
   });
 
-  console.log("Recipes to display", recipesToDisplay);
 
-  console.log("Ingredients", ingredients);
+  const handleRemoveRecipe = async (recipeId: string) => {
+    const userEmail = user?.primaryEmailAddress?.emailAddress;
+
+    if (!userEmail) return;
+
+    try {
+      const response = await fetch('http://localhost:3000/removeRecipe', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          recipeId: recipeId.toString(),
+          userEmail: userEmail
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to remove recipe');
+      }
+
+      fetchRecipes();
+    } catch (error) {
+      console.error('Error removing recipe:', error);
+    }
+  };
 
   return (
     <div>
-      <h2>Shopping List</h2>
+      <h2>Recipes List</h2>
       <ShoppingListContainer>
         {recipesToDisplay.length > 0 ? (
           recipesToDisplay.map((recipe: Recipe | undefined) => (
@@ -335,7 +353,7 @@ const ShoppingList = () => {
               <div className="button-group">
                 <button>View Recipe</button>
                 <button onClick={() => saveIngredient(ingredients.map((ingredient) => ingredient.ingredient), recipe!.id)}>Add missing ingredients to Shopping List</button>
-                <button>Remove Recipe</button>
+                <button onClick={() => handleRemoveRecipe(recipe!.id)}>Remove Recipe</button>
                 <Toaster position="bottom-right" richColors expand={true} />
               </div>
             </details>

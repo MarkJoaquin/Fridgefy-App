@@ -4,6 +4,8 @@ import  authRouter  from "./routers/authRoute";
 import  recipeRouter  from "./routers/recipeRoute";
 import  ingredientsRouter  from "./routers/ingredientsRouter";
 import cors from "cors";
+import { removeRecipe } from "./controllers/removeController";
+import fridgeRouter from "./routers/fridgeRoute";
 
 export const app = express();
 
@@ -19,6 +21,10 @@ app.use('/saveRecipe', recipeRouter);
 app.use('/getRecipes', recipeRouter);
 app.use('/getIngredients', ingredientsRouter )
 app.use('/saveIngredient', ingredientsRouter)
+
+app.use('/removeRecipe', removeRecipe);
+
+app.use('/myFridge', fridgeRouter);
 
 app.all("*", (req: Request, res: Response) => {
   res
