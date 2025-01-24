@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { selectRecipes } from "../../features/recipes/recipeSlice";
+import { Toaster, toast } from "sonner";
 
 const ShoppingListContainer = styled.div`
   display: flex;
@@ -226,7 +227,10 @@ const ShoppingList = () => {
 
       if (!response.ok) {
         throw new Error("Failed to save ingredients");
+      }else{
+        toast.success("Ingredients saved successfully");
       }
+
     } catch (error) {
       console.log("Error saving ingredienst:", error);
     } 
@@ -285,12 +289,6 @@ const ShoppingList = () => {
 
   console.log("Recipes to display", recipesToDisplay);
 
-  /* Ingredients to send */
-
-
-
-  /*  Ingredients to send  */
-
   console.log("Ingredients", ingredients);
 
   return (
@@ -313,7 +311,7 @@ const ShoppingList = () => {
                         checked={ingredients
                           .map((i) =>
                             typeof i === "string"
-                              ? i.toLowerCase().trim()
+                              ? (i as string).toLowerCase().trim()
                               : i.ingredient.toLowerCase().trim()
                           )
                           .includes(ingredient.toLowerCase().trim())}
@@ -338,6 +336,7 @@ const ShoppingList = () => {
                 <button>View Recipe</button>
                 <button onClick={() => saveIngredient(ingredients.map((ingredient) => ingredient.ingredient), recipe!.id)}>Add missing ingredients to Shopping List</button>
                 <button>Remove Recipe</button>
+                <Toaster position="bottom-right" richColors expand={true} />
               </div>
             </details>
           ))
