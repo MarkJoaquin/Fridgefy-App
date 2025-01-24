@@ -14,7 +14,7 @@ import RecipeList from "./components/Recipes/index.tsx";
 
 import { Provider } from "react-redux";
 import store from "./app/store";
-import ShoppingList from "./components/ShoppigList/shoppingList";
+import ShoppingList from "./components/ShoppigList/shoppingList.tsx";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_PUBLISHABLE_KEY;
 
