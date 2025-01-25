@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchRecipes,
@@ -13,6 +13,7 @@ import { AppDispatch } from "../../app/store";
 import styled from "styled-components";
 import { useUser } from "@clerk/clerk-react";
 import { toast, Toaster } from "sonner";
+import RecipeDetail from "./RecipeDetail";
 
 const RecipesContainer = styled.div`
   
@@ -57,6 +58,7 @@ const RecipeList = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { recipes, loading, error } = useSelector(selectRecipes);
   const { savedRecipes, loading: saveLoading} = useSelector(selectSavedRecipes);
+  const [selectedRecipe, setSelectedRecipe] = useState<any>(null);
   const userEmail = user?.primaryEmailAddress?.emailAddress || "";
 
   useEffect(() => {
@@ -74,6 +76,12 @@ const RecipeList = () => {
     return <div>Error: {error}</div>;
   }
 
+  const handleDetailsClick = (e: React.MouseEvent, recipe: any) => {
+    e.stopPropagation();
+    console.log("Details button clicked for recipe:", recipe);
+    setSelectedRecipe(recipe);
+};
+
   const handleSaveRecipe = async (recipeData: {
     recipeId: string;
     userEmail: string;
@@ -88,7 +96,9 @@ const RecipeList = () => {
     }
   };
 
-  
+  const closeDetails = () => {
+    setSelectedRecipe(null);
+  };
 
   console.log("Saved recipes", savedRecipes);
 
@@ -99,7 +109,12 @@ const RecipeList = () => {
           <div key={recipe.id}>
             <img src={recipe.image} alt="pimage" />
             <h3>{recipe.name}</h3>
-            <button>Details</button>
+            <button 
+                className="details-button"
+                onClick={(e) => handleDetailsClick(e, recipe)}
+              >
+                DETAILS
+            </button>
             <button
               onClick={() => {
                 handleSaveRecipe({ recipeId: String(recipe.id), userEmail }).then(() => {
@@ -112,6 +127,12 @@ const RecipeList = () => {
             </button>
           </div>
         ))}
+        {selectedRecipe && (
+            <RecipeDetail 
+                recipe={selectedRecipe} 
+                onClose={closeDetails} 
+            />
+          )}
       </RecipesContainer>
       <Toaster richColors position="bottom-right" />
     </div>
