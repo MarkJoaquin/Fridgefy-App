@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { saveRecipe, getRecipes } from "../controllers/recipeController";
-import { removeRecipe } from "../controllers/removeController";
+import { saveRecipe, getSavedRecipes, deleteRecipe } from "../controllers/recipeController";
+
 
 const router = Router();
 
 router.post("/", saveRecipe);
-router.get("/", getRecipes);
-router.delete("/remove", removeRecipe);
+router.get("/", getSavedRecipes);
+router.delete("/", deleteRecipe);
 
 export default router;

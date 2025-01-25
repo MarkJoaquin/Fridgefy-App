@@ -3,6 +3,10 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+interface recipeId {
+  recipeId: string;
+}
+
 export const saveRecipe = async (
   req: Request,
   res: Response,
@@ -71,13 +75,18 @@ export const saveRecipe = async (
   }
 };
 
-export const getRecipes = async (req: Request, res: Response, next: NextFunction) => {
+export const getSavedRecipes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { userEmail } = req.query;
 
   if (!userEmail) {
     return res.status(400).json({
       status: "error",
-      message: "User email is required"
+      message: "User email is required",
+      error: Error
     });
   }
 
@@ -105,6 +114,44 @@ export const getRecipes = async (req: Request, res: Response, next: NextFunction
       status: "error",
       message: "Internal server error",
       error: error
+    });
+  }
+};
+
+export const deleteRecipe = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { userEmail, recipeId } = req.body;
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: userEmail }
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        status: "error",
+        message: "User not found"
+      });
+    }
+
+    await prisma.recipe.deleteMany({
+      where: {
+        AND: [{ userId: user.id }, { recipeId: recipeId }]
+      }
+    });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Recipe deleted successfully"
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Error deleting recipe",
+      error: error instanceof Error ? error.message : "Unknown error"
     });
   }
 };

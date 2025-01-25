@@ -3,9 +3,8 @@ import { CustomError } from "./errors/custom-error";
 import  authRouter  from "./routers/authRoute";
 import  recipeRouter  from "./routers/recipeRoute";
 import  ingredientsRouter  from "./routers/ingredientsRouter";
+import  shoppingListRoute  from "./routers/shoppingListRoute";
 import cors from "cors";
-import { removeRecipe } from "./controllers/removeController";
-import fridgeRouter from "./routers/fridgeRoute";
 
 export const app = express();
 
@@ -16,15 +15,23 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello world");
 });
 
+// For Authentication
 app.use('/saveDataUser', authRouter);
+
+// For recipes
 app.use('/saveRecipe', recipeRouter); 
-app.use('/getRecipes', recipeRouter);
-app.use('/getIngredients', ingredientsRouter )
+app.use('/getSavedRecipes', recipeRouter);
+app.use('/deleteRecipe', recipeRouter)
+
+// For ingredients
+app.use('/savedIngredients', ingredientsRouter )
 app.use('/saveIngredient', ingredientsRouter)
+app.use('/saveIndividualIngredient', ingredientsRouter)
+app.use('/deleteIngredient', ingredientsRouter)
 
-app.use('/removeRecipe', removeRecipe);
-
-app.use('/myFridge', fridgeRouter);
+//For shopping list or Items to buy
+app.use('/getShoppingList', shoppingListRoute)
+app.use('/deleteShoppingItem', shoppingListRoute)
 
 app.all("*", (req: Request, res: Response) => {
   res

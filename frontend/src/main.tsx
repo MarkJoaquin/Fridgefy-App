@@ -14,7 +14,9 @@ import RecipeList from "./components/Recipes/index.tsx";
 
 import { Provider } from "react-redux";
 import store from "./app/store";
-import ShoppingList from "./components/ShoppigList/shoppingList.tsx";
+import ShoppingList from "./components/ShoppigList/index.tsx";
+import ItemsToBuy from "./components/ItemToBuy/index.tsx";
+import MyRecipesSideBar from "./components/MyRecipesSideBar/index.tsx";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_PUBLISHABLE_KEY;
 
@@ -38,7 +40,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/recipes",
-        element: <RecipeList />,
+        element: (
+          <>
+            <RecipeList />
+             <MyRecipesSideBar />
+          </>
+        ),
       },
       {
         path: "/",
@@ -46,8 +53,13 @@ const router = createBrowserRouter([
       },
       {
         path: "/shopping-list",
-        element: <ShoppingList />,
-      }
+        element: (
+          <>
+            <ShoppingList />
+            <ItemsToBuy />
+          </>
+        ),
+      },
     ],
   },
 ]);

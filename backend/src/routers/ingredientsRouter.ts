@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { getIngredients, saveIngredient } from "../controllers/ingredientsController";
+import { savedIngredients, saveIngredient, deleteIngredient, saveIndividualIngredient } from "../controllers/ingredientsController";
 
 const router = Router();
 
-router.get("/", getIngredients);
+router.get("/", savedIngredients);
 router.post("/", saveIngredient);
+router.post("/saveIndividualIngredient", saveIndividualIngredient)
+router.delete("/", deleteIngredient)
 
 export default router;

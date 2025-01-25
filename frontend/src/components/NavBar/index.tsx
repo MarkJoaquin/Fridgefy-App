@@ -15,6 +15,12 @@ const Nav = styled.nav`
   color: #141414;
 
   padding: 1rem 10rem;
+
+  position: fixed;
+  width: -webkit-fill-available;
+  top: 0;
+  z-index: 10;
+
 `;
 
 const LogoContainer = styled.div`
@@ -71,7 +77,6 @@ const Navbar = () => {
       </Ul>
       <Ul>
         {user.isSignedIn ? (
-          
           <StyledNavLink to="/shopping-list">
             <SaveUserOnLogin />
             <li>Shopping List</li>
@@ -85,7 +90,7 @@ const Navbar = () => {
           <li>Recipes</li>
         </StyledNavLink>
         {user.isSignedIn ? (
-          <UserButton appearance={{ baseTheme: dark}} />
+          <UserButton appearance={{ baseTheme: dark }} />
         ) : (
           <StyledNavLink to="/signin">
             <li>Login</li>

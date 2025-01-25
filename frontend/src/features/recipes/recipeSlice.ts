@@ -5,8 +5,8 @@ import axios from "axios";
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async () => {
-    const response = await axios.get("https://dummyjson.com/recipes?limit=0");
-    return response.data.recipes; 
+    const response = await axios.get("https://dummyjson.com/recipes?limit=0"); // move to backend
+    return (response.data as { recipes: Recipe[] }).recipes;
   }
 );
 

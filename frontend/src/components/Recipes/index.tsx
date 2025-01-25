@@ -4,18 +4,22 @@ import {
   fetchRecipes,
   selectRecipes,
 } from "../../features/recipes/recipeSlice";
+import {
+  saveRecipe,
+  fetchSavedRecipes,
+  selectSavedRecipes,
+} from "../../features/savedRecipes/savedRecipesSlice";
 import { AppDispatch } from "../../app/store";
 import styled from "styled-components";
 import { useUser } from "@clerk/clerk-react";
+import { toast, Toaster } from "sonner";
 
 const RecipesContainer = styled.div`
-  display: flex;
   
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   height: 80vh;
-
 
   div {
     margin: 10px;
@@ -48,44 +52,19 @@ const RecipesContainer = styled.div`
     }
   }
 `;
-
-const saveRecipe = async (recipeData: {
-  recipeId: string;
-  userEmail: string;
-}) => {
-  /* console.log("Save recipe with id", recipeData.recipeId);
-    console.log("User email", recipeData.userEmail); */
-  try {
-    const response = await fetch("http://localhost:3000/saveRecipe", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(recipeData),
-    });
-
-    if (!response.ok) {
-      console.warn(
-        "Failed to save recipe to the database, Recipe probably already exists"
-      );
-    }
-    
-    // change for a better message
-    console.log(`Recipe ${recipeData.recipeId} saved successfully`);
-
-  } catch (error) {
-    console.log("Error saving recipe:", error);
-  }
-};
-
 const RecipeList = () => {
   const { user } = useUser();
   const dispatch = useDispatch<AppDispatch>();
   const { recipes, loading, error } = useSelector(selectRecipes);
+  const { savedRecipes, loading: saveLoading} = useSelector(selectSavedRecipes);
+  const userEmail = user?.primaryEmailAddress?.emailAddress || "";
 
   useEffect(() => {
     dispatch(fetchRecipes());
-  }, [dispatch]);
+    if (userEmail) {
+      dispatch(fetchSavedRecipes(userEmail));
+    }
+  }, [dispatch, userEmail]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -95,28 +74,43 @@ const RecipeList = () => {
     return <div>Error: {error}</div>;
   }
 
+  const handleSaveRecipe = async (recipeData: {
+    recipeId: string;
+    userEmail: string;
+  }) => {
+    console.log("Saving recipe", recipeData);
+    try {
+      await dispatch(saveRecipe(recipeData)).unwrap();
+      toast.success("Recipe saved successfully!");
+    } catch (error: any) {
+      console.error("Failed to save recipe", error.message);
+      toast.error(error.message);
+    }
+  };
+
+  console.log("Saved recipes", savedRecipes);
+
   return (
-    <div>
-      <h2>Recipes</h2>
-      <RecipesContainer>
+    <div style={ userEmail ? {gridArea: "recipes"} : {  }}>
+      <RecipesContainer style={ { display: "flex", marginTop: "4rem"}}>
         {recipes.map((recipe) => (
           <div key={recipe.id}>
             <img src={recipe.image} alt="pimage" />
             <h3>{recipe.name}</h3>
             <button
-              onClick={() =>
-                saveRecipe({
-                  recipeId: String(recipe.id),
-                  userEmail: user?.primaryEmailAddress?.emailAddress || "",
-                })
-              }
-              disabled={!user?.primaryEmailAddress?.emailAddress}
+              onClick={() => {
+                handleSaveRecipe({ recipeId: String(recipe.id), userEmail }).then(() => {
+                  dispatch(fetchSavedRecipes(userEmail));
+                });
+              }}
+              disabled={!userEmail || savedRecipes.map(savedRecipe => savedRecipe.recipeId).includes(String(recipe.id)) || saveLoading}
             >
-              Save Recipe
+              +
             </button>
           </div>
         ))}
       </RecipesContainer>
+      <Toaster richColors position="bottom-right" />
     </div>
   );
 };

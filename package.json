@@ -8,7 +8,7 @@
   },
   "scripts": {
     "backend": "cd backend && npm run dev",
-    "frontend": "cd frontend && npm run dev",
+    "frontend":"cd frontend && npm run dev",
     "dev": "concurrently \"npm run backend\"  \"npm run frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,11 +17,5 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^9.1.2"
-  },
-  "dependencies": {
-    "@reduxjs/toolkit": "^2.5.0",
-    "@types/react-redux": "^7.1.34",
-    "axios": "^1.7.9",
-    "react-redux": "^9.2.0"
   }
 }
