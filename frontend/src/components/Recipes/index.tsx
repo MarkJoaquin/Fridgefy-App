@@ -15,6 +15,7 @@ import { useUser } from "@clerk/clerk-react";
 import { toast, Toaster } from "sonner";
 import RecipeDetail from "./RecipeDetail";
 
+
 const RecipesContainer = styled.div`
   
   flex-wrap: wrap;
@@ -60,6 +61,7 @@ const RecipeList = () => {
   const { savedRecipes, loading: saveLoading} = useSelector(selectSavedRecipes);
   const [selectedRecipe, setSelectedRecipe] = useState<any>(null);
   const userEmail = user?.primaryEmailAddress?.emailAddress || "";
+  
 
   useEffect(() => {
     dispatch(fetchRecipes());
@@ -76,6 +78,7 @@ const RecipeList = () => {
     return <div>Error: {error}</div>;
   }
 
+  
   const handleDetailsClick = (e: React.MouseEvent, recipe: any) => {
     e.stopPropagation();
     console.log("Details button clicked for recipe:", recipe);

@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from 'react-icons/fa';
 
+
+import "./RecipeDetails.css"
+
 interface RecipeProps {
     recipe: any;
     onClose: () => void;

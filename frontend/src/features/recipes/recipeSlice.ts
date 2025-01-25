@@ -11,17 +11,17 @@ export const fetchRecipes = createAsyncThunk(
 );
 
 type Recipe = {
-  id: string;
+  id: string ;
   name: string;
-  ingredients: string[];
-  instructions: string[];
+  ingredients: string[] | string;
+  instructions: string[] | string;
   prepTimeMinutes: number;
   cookTimeMinutes: number;
   servings: number;
   difficulty: "Easy" | "Medium" | "Hard";
   cuisine: string;
   caloriesPerServing: number;
-  tags: string[];
+  tags?: string[] | string;
   userId: number;
   image: string;
   rating: number;
