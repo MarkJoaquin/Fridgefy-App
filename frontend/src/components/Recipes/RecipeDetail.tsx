@@ -21,28 +21,28 @@ const RecipeDetail: React.FC<RecipeProps> = ({ recipe, onClose }) => {
     if (!recipe) return null;
 
     return (
-        <div className="modal-overlay">
+        <div className="detail-modal-overlay">
             <div className="modal-content">
-                <div>
-                <button  
-                onClick={onClose} 
-                style={{
-                    background: 'transparent', 
-                    border: 'none', 
-                    cursor: 'pointer', 
-                    color: '#333'
-                }}
-                >
-                <FaTimes size={20} />
-            </button>
-
-                </div>
+                <button  className="close-button"
+                    onClick={onClose} 
+                    style={{
+                        background: 'transparent', 
+                        border: 'none', 
+                        cursor: 'pointer', 
+                        color: '#333'
+                    }}
+                    >
+                    <FaTimes size={20} />
+                    </button>
 
                 <h2>{recipe.name}</h2>
                 <img className="image-Detail" src={recipe.image} alt={recipe.name} />
-                <p>Dificulty: {recipe.difficulty}</p>
-                <p> Cousine: {recipe.cuisine}</p>
-                <p>Calories: {recipe.caloriesPerServing}</p>
+                <div className="details">
+                <p><strong>Dificulty:</strong>  {recipe.difficulty}</p>
+                <p><strong>Cousine:</strong>  {recipe.cuisine}</p>
+                <p><strong>Calories:</strong> {recipe.caloriesPerServing}</p>
+                </div>
+                
                 <button 
                     className="full-details-button" 
                     onClick={handleViewFullRecipeDetails}

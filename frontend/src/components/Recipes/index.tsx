@@ -47,6 +47,7 @@ const RecipesContainer = styled.div`
       border-radius: 5px;
       cursor: pointer;
     }
+    
 
     button:disabled {
       background: #ccc;
