@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchRecipes,
@@ -14,13 +14,17 @@ import './Recipes.css';
 // import { RecipesContainer } from './Recipes';
 import { useUser } from "@clerk/clerk-react";
 import { toast, Toaster } from "sonner";
+import RecipeDetail from "./RecipeDetail";
+
 
 const RecipeList = () => {
   const { user } = useUser();
   const dispatch = useDispatch<AppDispatch>();
   const { recipes, loading, error } = useSelector(selectRecipes);
   const { savedRecipes, loading: saveLoading} = useSelector(selectSavedRecipes);
+  const [selectedRecipe, setSelectedRecipe] = useState<any>(null);
   const userEmail = user?.primaryEmailAddress?.emailAddress || "";
+  
 
   useEffect(() => {
     dispatch(fetchRecipes());
@@ -37,6 +41,13 @@ const RecipeList = () => {
     return <div>Error: {error}</div>;
   }
 
+  
+  const handleDetailsClick = (e: React.MouseEvent, recipe: any) => {
+    e.stopPropagation();
+    console.log("Details button clicked for recipe:", recipe);
+    setSelectedRecipe(recipe);
+};
+
   const handleSaveRecipe = async (recipeData: {
     recipeId: string;
     userEmail: string;
@@ -51,18 +62,27 @@ const RecipeList = () => {
     }
   };
 
+  const closeDetails = () => {
+    setSelectedRecipe(null);
+  };
+
   console.log("Saved recipes", savedRecipes);
 
   return (
     <div style={ userEmail ? {gridArea: "recipes"} : {  }}>
       <div className={`recipes-container ${userEmail ? "gridArea: recipes" : "recipes-container"}`}>
         {recipes.map((recipe) => (
-          <section key={recipe.id}>
+          <div className="recipe-card" key={recipe.id}>
             <div className="img-container">
               <img src={recipe.image} alt="pimage" />  
             </div>
             <h3>{recipe.name}</h3>
-            <button className="view-button">View Recipe</button>
+            <button 
+                className="view-button"
+                onClick={(e) => handleDetailsClick(e, recipe)}
+              >
+                Details
+            </button>
             <button
             className="save-button"
               onClick={() => {
@@ -74,11 +94,17 @@ const RecipeList = () => {
             >
               +
             </button>
-          </section>
+          </div>
         ))}
-      </div>
+        {selectedRecipe && (
+            <RecipeDetail 
+                recipe={selectedRecipe} 
+                onClose={closeDetails} 
+            />
+          )}
       <Toaster richColors position="bottom-right" />
     </div>
+  </div>
   );
 };
 

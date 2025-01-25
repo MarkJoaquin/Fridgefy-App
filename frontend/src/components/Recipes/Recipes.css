@@ -6,7 +6,7 @@
     height: 80vh;
 }
 
-.recipes-container section {
+.recipes-container .recipe-card {
     margin: 10px;
     padding-bottom: 15px;
     /* border: 1px solid #ccc; */

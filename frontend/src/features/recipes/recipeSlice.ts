@@ -6,22 +6,23 @@ export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async () => {
     const response = await axios.get("https://dummyjson.com/recipes?limit=0"); // move to backend
+    console.log("API Response:", response.data);
     return (response.data as { recipes: Recipe[] }).recipes;
   }
 );
 
 type Recipe = {
-  id: string;
+  id: string ;
   name: string;
-  ingredients: string[];
-  instructions: string[];
+  ingredients: string[] | string;
+  instructions: string[] | string;
   prepTimeMinutes: number;
   cookTimeMinutes: number;
   servings: number;
   difficulty: "Easy" | "Medium" | "Hard";
   cuisine: string;
   caloriesPerServing: number;
-  tags: string[];
+  tags?: string[] | string;
   userId: number;
   image: string;
   rating: number;

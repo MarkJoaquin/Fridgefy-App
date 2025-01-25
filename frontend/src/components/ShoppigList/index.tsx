@@ -255,72 +255,74 @@ const ShoppingList = () => {
         <ShoppingListContainer>
           <h2>My Recipes</h2>
           {savedRecipeDetails.length > 0 ? (
-            savedRecipeDetails.map((recipe: Recipe | undefined) => (
-              <details key={recipe!.id}>
-                <summary>{recipe!.name}</summary>
-                <img src={recipe!.image} alt={recipe!.name} />
-                <div>
-                  <h3>Ingredients</h3>
-                  <ul>
-                    {recipe!.ingredients.map((ingredient, index) => (
-                      <li key={index}>
-                        <input
-                          style={{ cursor: "not-allowed" }}
-                          type="checkbox"
-                          checked={isIngredientSaved(ingredient)}
-                          readOnly
-                        />
-                        <span
-                          style={{
-                            textDecoration: isIngredientSaved(ingredient)
-                              ? "line-through"
-                              : "none",
-                            color: isIngredientSaved(ingredient)
-                              ? "#666"
-                              : "inherit",
-                          }}
-                        >
-                          {ingredient}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p
-                    style={{
-                      color: "#777",
-                      paddingTop: "15px",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    Note: Checkboxes indicate ingredients already in your fridge
-                    and are read-only.
-                  </p>
-                </div>
-                <div className="button-group">
-                  <button>View Recipe</button>
-                  <button
-                    onClick={() => {
-                      handleSaveIngredients(String(recipe!.id)).then(() => {
-                        dispatch(getShoppingList(userEmail));
-                      });
-                    }}
-                  >
-                    Add missing ingredients to Shopping List
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleDeleteRecipe(String(recipe!.id)).then(() => {
-                        dispatch(fetchSavedRecipes(userEmail));
-                        dispatch(fetchRecipes());
-                      });
-                    }}
-                  >
-                    Remove Recipe
-                  </button>
-                  <Toaster position="bottom-right" richColors expand={true} />
-                </div>
-              </details>
-            ))
+            savedRecipeDetails
+              .filter((recipe): recipe is Recipe => recipe !== undefined)
+              .map((recipe) => (
+                <details key={recipe.id}>
+                  <summary>{recipe.name}</summary>
+                  <img src={recipe.image} alt={recipe.name} />
+                  <div>
+                    <h3>Ingredients</h3>
+                    <ul>
+                      {recipe.ingredients.map((ingredient, index) => (
+                        <li key={index}>
+                          <input
+                            style={{ cursor: "not-allowed" }}
+                            type="checkbox"
+                            checked={isIngredientSaved(ingredient)}
+                            readOnly
+                          />
+                          <span
+                            style={{
+                              textDecoration: isIngredientSaved(ingredient)
+                                ? "line-through"
+                                : "none",
+                              color: isIngredientSaved(ingredient)
+                                ? "#666"
+                                : "inherit",
+                            }}
+                          >
+                            {ingredient}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p
+                      style={{
+                        color: "#777",
+                        paddingTop: "15px",
+                        fontStyle: "italic",
+                      }}
+                    >
+                      Note: Checkboxes indicate ingredients already in your fridge
+                      and are read-only.
+                    </p>
+                  </div>
+                  <div className="button-group">
+                    <button>View Recipe</button>
+                    <button
+                      onClick={() => {
+                        handleSaveIngredients(String(recipe.id)).then(() => {
+                          dispatch(getShoppingList(userEmail));
+                        });
+                      }}
+                    >
+                      Add missing ingredients to Shopping List
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleDeleteRecipe(String(recipe.id)).then(() => {
+                          dispatch(fetchSavedRecipes(userEmail));
+                          dispatch(fetchRecipes());
+                        });
+                      }}
+                    >
+                      Remove Recipe
+                    </button>
+                    <Toaster position="bottom-right" richColors expand={true} />
+                  </div>
+                </details>
+              ))
           ) : (
             <p>No recipes saved</p>
           )}
