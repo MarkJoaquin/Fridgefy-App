@@ -10,48 +10,11 @@ import {
   selectSavedRecipes,
 } from "../../features/savedRecipes/savedRecipesSlice";
 import { AppDispatch } from "../../app/store";
-import styled from "styled-components";
+import './Recipes.css';
+// import { RecipesContainer } from './Recipes';
 import { useUser } from "@clerk/clerk-react";
 import { toast, Toaster } from "sonner";
 
-const RecipesContainer = styled.div`
-  
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-
-  div {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 300px;
-    text-align: center;
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    h3 {
-      margin: 0;
-    }
-
-    button {
-      color: #141414;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-  }
-`;
 const RecipeList = () => {
   const { user } = useUser();
   const dispatch = useDispatch<AppDispatch>();
@@ -92,12 +55,16 @@ const RecipeList = () => {
 
   return (
     <div style={ userEmail ? {gridArea: "recipes"} : {  }}>
-      <RecipesContainer style={ { display: "flex", marginTop: "4rem"}}>
+      <div className={`recipes-container ${userEmail ? "gridArea: recipes" : "recipes-container"}`}>
         {recipes.map((recipe) => (
-          <div key={recipe.id}>
-            <img src={recipe.image} alt="pimage" />
+          <section key={recipe.id}>
+            <div className="img-container">
+              <img src={recipe.image} alt="pimage" />  
+            </div>
             <h3>{recipe.name}</h3>
+            <button className="view-button">View Recipe</button>
             <button
+            className="save-button"
               onClick={() => {
                 handleSaveRecipe({ recipeId: String(recipe.id), userEmail }).then(() => {
                   dispatch(fetchSavedRecipes(userEmail));
@@ -107,9 +74,9 @@ const RecipeList = () => {
             >
               +
             </button>
-          </div>
+          </section>
         ))}
-      </RecipesContainer>
+      </div>
       <Toaster richColors position="bottom-right" />
     </div>
   );
