@@ -100,12 +100,12 @@ const FullRecipeDetails: React.FC = () => {
                             <div className="tags-container">
                                 {Array.isArray(currentRecipe.tags) 
                                     ? currentRecipe.tags.map((tag: string, index: number) => (
-                                          <span key={index} className="tag">{tag}</span>
-                                      ))
+                                        <span key={index} className="tag">{tag}</span>
+                                    ))
                                     : typeof currentRecipe.tags === 'string' 
                                         ? currentRecipe.tags.split(',').map((tag: string, index: number) => (
-                                          <span key={index} className="tag">{tag.trim()}</span>
-                                      ))
+                                        <span key={index} className="tag">{tag.trim()}</span>
+                                    ))
                                         : null
                                 }
                             </div>

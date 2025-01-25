@@ -14,7 +14,7 @@ const Nav = styled.nav`
   background-color: #16a54a;
   color: #141414;
 
-  padding: 1rem 10rem;
+  padding: 1rem 2rem;
 
   position: fixed;
   width: -webkit-fill-available;

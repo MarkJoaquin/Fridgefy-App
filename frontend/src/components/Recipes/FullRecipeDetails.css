@@ -55,12 +55,13 @@
     flex-direction: column;
     gap: 20px;
     margin-bottom: 20px;
+
   }
   
   .recipe-full-image {
     width: 100%;
     border-radius: 8px;
-    object-fit: cover;
+    
   }
   
   /* Estilos para la información rápida de la receta */
@@ -70,6 +71,8 @@
     gap: 15px;
     font-size: 1rem;
     margin-top: 10px;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid lightgray;
   }
   
   .recipe-quick-info p {
@@ -88,6 +91,23 @@
     color: #333;
     margin-bottom: 10px;
   }
+
+  .recipe-ingredients {
+    padding-bottom: 2rem;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .recipe-instructions {
+    padding-top: 2rem;
+  }
+
+  .recipe-instructions li {
+    padding: 0.8rem;
+    margin-left: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+  }
+  
   
   .recipe-ingredients ul,
   .recipe-instructions ol {

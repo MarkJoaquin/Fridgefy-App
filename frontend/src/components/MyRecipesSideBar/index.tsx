@@ -8,6 +8,8 @@ import { AppDispatch } from "../../app/store";
 import { selectSavedRecipes } from "../../features/savedRecipes/savedRecipesSlice";
 import { selectRecipes } from "../../features/recipes/recipeSlice";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+
 const MyRecipesSideBar = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useUser();
@@ -30,10 +32,12 @@ const MyRecipesSideBar = () => {
       <Title>My Recipes</Title>
       <RecipeList>
         {savedRecipesDetails.map((recipe) => (
-          <RecipeItem key={recipe.id}>
-            <RecipeImage src={recipe.image} alt={recipe.name} />
-            <RecipeTitle>{recipe.name}</RecipeTitle>
-          </RecipeItem>
+          <Link to={`/shopping-list`} style={{ textDecoration: 'none' }}>
+            <RecipeItem>
+              <RecipeImage src={recipe.image} alt={recipe.name} />
+              <RecipeTitle>{recipe.name}</RecipeTitle>
+            </RecipeItem>
+          </Link>
         ))}
       </RecipeList>
     </SideBarContainer>
@@ -45,6 +49,7 @@ const SideBarContainer = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 20vw;
 `;
 
 const Title = styled.h2`
@@ -83,7 +88,7 @@ const RecipeImage = styled.img`
 `;
 
 const RecipeTitle = styled.h3`
-  font-size: 16px;
+  font-size: 14px;
   color: #444;
   margin: 0;
 `;

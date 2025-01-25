@@ -39,7 +39,7 @@ const ItemsToBuy = () => {
 
   return (
     <Container>
-      <h2>Items to Buy</h2>
+      <h2 style={{ marginBottom: "1rem" }}>Items to Buy</h2>
       <Toaster />
       {items.length > 0 ? (
         <ItemList>
@@ -50,7 +50,7 @@ const ItemsToBuy = () => {
                 className="delete-button"
                 onClick={() => handleDeleteItem(item.ingredient)}
               >
-                Delete
+                -
               </DeleteButton>
             </Item>
           ))}
@@ -68,8 +68,8 @@ const Container = styled.div`
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-  display: grid;
-  grid-area: shopping;
+  display: flex;
+  flex-direction: column;
   margin-top: 1rem;
 `;
 
@@ -96,11 +96,12 @@ const ItemText = styled.span`
 `;
 
 const DeleteButton = styled.button`
-  background-color: #e53935;
+  background-color: lightcoral;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 50%;
   padding: 0.5rem 1rem;
+  
   font-size: 0.875rem;
   cursor: pointer;
 

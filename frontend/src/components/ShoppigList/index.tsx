@@ -24,9 +24,11 @@ const ShoppingListContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 20px;
 
-  grid-area: shopping;
+  grid-area: recipes;
+  width: 50vw;
 
   h2 {
     font-size: 24px;

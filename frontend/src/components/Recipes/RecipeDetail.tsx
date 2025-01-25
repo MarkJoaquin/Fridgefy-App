@@ -39,6 +39,7 @@ const RecipeDetail: React.FC<RecipeProps> = ({ recipe, onClose }) => {
     return (
         <div className="detail-modal-overlay">
             <div className="modal-content">
+                
                 <button
                     className="close-button"
                     onClick={onClose}
@@ -46,22 +47,23 @@ const RecipeDetail: React.FC<RecipeProps> = ({ recipe, onClose }) => {
                 >
                     <FaTimes size={20} />
                 </button>
-
-                <h2>{recipe.name}</h2>
-                <img className="image-Detail" src={recipe.image} alt={recipe.name} />
-                <div className="details">
-                    <p><strong>Difficulty:</strong>  {recipe.difficulty}</p>
-                    <p><strong>Cuisine:</strong>  {recipe.cuisine}</p>
-                    <p><strong>Calories:</strong> {recipe.caloriesPerServing}</p>
-                </div>
+                <div className="info-container">
+                    <h2>{recipe.name}</h2>
+                    <img className="image-Detail" src={recipe.image} alt={recipe.name} />
+                    <div className="details">
+                        <p><strong>Difficulty:</strong>  {recipe.difficulty}</p>
+                        <p><strong>Cuisine:</strong>  {recipe.cuisine}</p>
+                        <p><strong>Calories:</strong> {recipe.caloriesPerServing}</p>
+                    </div>
                 
-                <button 
-                    className="full-details-button" 
-                    onClick={handleViewFullRecipeDetails}
-                    aria-label={`View full details of ${recipe.name}`}
-                >
-                    View full Details
-                </button>
+                    <button 
+                        className="full-details-button" 
+                        onClick={handleViewFullRecipeDetails}
+                        aria-label={`View full details of ${recipe.name}`}
+                    >
+                        View full Details
+                    </button>
+                </div>
             </div>
         </div>
     );
