@@ -9,7 +9,7 @@ const Main = styled.main`
   display: grid;
   grid-template: "fridge recipes recipes shopping";
   gap: 1rem;
-  margin-top: 4rem;
+  margin-top: 5rem;
   grid-template-rows: 1fr;
 `;
 
