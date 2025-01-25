@@ -8,25 +8,29 @@ import { fetchRecipes } from '../../features/recipes/recipeSlice';
 const FullRecipeDetails: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
     
-    console.log("Recipe ID from URL:", id);
-    
-    const { recipes, loading } = useSelector((state: RootState) => state.recipes);
-    console.log("ID desde URL:", id);
-    console.log("Recetas desde el estado:", recipes);
-    
+    console.log("Recipe ID from URL:", id);  // Verifica el id de la URL
+
+    const { recipes, loading, error } = useSelector((state: RootState) => state.recipes);
+    console.log("Recetas desde el estado:", recipes);  // Verifica las recetas en el estado
+
     useEffect(() => {
         dispatch(fetchRecipes());
     }, [dispatch]);
 
+    // Verifica si hay un error al cargar las recetas
     if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error loading recipes: {error}</div>;
 
-   const currentRecipe = recipes.find((recipe) => recipe.id === Number(id));
-   
+    // Asegúrate de que las recetas tengan datos
+    if (!recipes || recipes.length === 0) return <div>No recipes available</div>;
 
-    console.log("recipes from State:",recipes )
-    console.log("Current Recipe:", currentRecipe )
+    // Encuentra la receta actual por ID
+    const currentRecipe = recipes.find((recipe) => Number(recipe.id) === Number(id));
+    console.log("Currrent recipe:", currentRecipe
+        
+    )
 
     if (!currentRecipe) return <div>Recipe not found</div>;
 
@@ -51,8 +55,8 @@ const FullRecipeDetails: React.FC = () => {
                         <img src={currentRecipe.image} alt={currentRecipe.name} className="recipe-full-image" />
                         
                         <div className="recipe-quick-info">
-                            <p><strong>Prep Time:</strong> {currentRecipe.prepTimeMinutes}</p>
-                            <p><strong>Cook Time:</strong> {currentRecipe.cookTimeMinutes}</p>
+                            <p><strong>Prep Time:</strong> {currentRecipe.prepTimeMinutes} minutes</p>
+                            <p><strong>Cook Time:</strong> {currentRecipe.cookTimeMinutes} minutes</p>
                             <p><strong>Servings:</strong> {currentRecipe.servings}</p>
                             <p><strong>Difficulty:</strong> {currentRecipe.difficulty}</p>
                             <p><strong>Cuisine:</strong> {currentRecipe.cuisine}</p>
@@ -64,7 +68,7 @@ const FullRecipeDetails: React.FC = () => {
                         <section className="recipe-ingredients">
                             <h2>Ingredients</h2>
                             <ul>
-                            {Array.isArray(currentRecipe.ingredients) 
+                                {Array.isArray(currentRecipe.ingredients)
                                     ? currentRecipe.ingredients.map((ingredient, index) => (
                                         <li key={index}>{ingredient}</li>
                                     ))
@@ -78,7 +82,7 @@ const FullRecipeDetails: React.FC = () => {
                             <h2>Instructions</h2>
                             <ol>
                                 {instructions.map((step: string, index: number) => (
-                                <li key={index}>{step}</li>
+                                    <li key={index}>{step}</li>
                                 ))}
                             </ol>
                         </section>
@@ -86,7 +90,7 @@ const FullRecipeDetails: React.FC = () => {
                         <section className="recipe-tags">
                             <h2>Tags</h2>
                             <div className="tags-container">
-                            {Array.isArray(currentRecipe.tags) 
+                                {Array.isArray(currentRecipe.tags) 
                                     ? currentRecipe.tags.map((tag: string, index: number) => (
                                           <span key={index} className="tag">{tag}</span>
                                       ))
