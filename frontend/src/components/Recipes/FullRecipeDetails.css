@@ -1,0 +1,161 @@
+/* Estilos generales para el contenedor principal */
+.main-container {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+  
+  /* Contenedor de detalles de la receta */
+  .recipe-full-details {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+  }
+  
+  /* Estilo para la cabecera de la receta */
+  .recipe-header {
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    margin-bottom: 20px;
+    gap: 10px;
+  }
+  
+  .recipe-header h3 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .back-button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilo de la imagen principal */
+  .recipe-main-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .recipe-full-image {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  /* Estilos para la información rápida de la receta */
+  .recipe-quick-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas */
+    gap: 15px;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  .recipe-quick-info p {
+    margin: 0;
+    font-weight: 600;
+    color: #555;
+  }
+  
+  /* Estilos de los ingredientes, instrucciones y otros detalles */
+  .recipe-details {
+    margin-top: 30px;
+  }
+  
+  .recipe-details h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .recipe-ingredients ul,
+  .recipe-instructions ol {
+    margin-left: 20px;
+  }
+  
+  .recipe-ingredients li,
+  .recipe-instructions li {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  
+  /* Estilo de las etiquetas */
+  .recipe-tags {
+    margin-top: 20px;
+  }
+  
+  .tags-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .tag {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+  
+  /* Estilo del tipo de comida y la calificación */
+  .recipe-meal-type,
+  .recipe-rating {
+    margin-top: 20px;
+  }
+  
+  .recipe-rating .rating-container {
+    background-color: #f1f1f1;
+    padding: 8px;
+    border-radius: 5px;
+    width: fit-content;
+  }
+  
+  .rating-value {
+    font-size: 1.2rem;
+    color: #4CAF50;
+  }
+  
+  /* Estilos responsivos para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .recipe-header {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .recipe-main-info {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .recipe-quick-info {
+      grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
+  
+    .recipe-full-image {
+      max-width: 80%;
+      margin-bottom: 20px;
+    }
+  }
+  

@@ -6,6 +6,7 @@ export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async () => {
     const response = await axios.get("https://dummyjson.com/recipes?limit=0"); // move to backend
+    console.log("API Response:", response.data);
     return (response.data as { recipes: Recipe[] }).recipes;
   }
 );

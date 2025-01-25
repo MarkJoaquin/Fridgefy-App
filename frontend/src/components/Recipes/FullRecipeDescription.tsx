@@ -1,40 +1,48 @@
-import MyRecipeList from "./index";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../app/store';
 import { useEffect } from 'react';
 import { fetchRecipes } from '../../features/recipes/recipeSlice';
+import "./FullRecipeDetails.css"
 
 const FullRecipeDetails: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { id } = useParams<{ id: string }>();
-    
-    console.log("Recipe ID from URL:", id);  // Verifica el id de la URL
+
+    console.log("Recipe ID from URL:", id);  
 
     const { recipes, loading, error } = useSelector((state: RootState) => state.recipes);
-    console.log("Recetas desde el estado:", recipes);  // Verifica las recetas en el estado
+
+    console.log("Recetas desde el estado:", recipes);
 
     useEffect(() => {
-        dispatch(fetchRecipes());
-    }, [dispatch]);
+        
+        if (recipes.length === 0) {
+            console.log("No recipes found in state, fetching...");
+            dispatch(fetchRecipes());
+        } else {
+            console.log("Recipes already loaded.");
+        }
+    }, [dispatch, recipes.length]);
 
-    // Verifica si hay un error al cargar las recetas
+   
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error loading recipes: {error}</div>;
 
-    // Asegúrate de que las recetas tengan datos
     if (!recipes || recipes.length === 0) return <div>No recipes available</div>;
 
-    // Encuentra la receta actual por ID
-    const currentRecipe = recipes.find((recipe) => Number(recipe.id) === Number(id));
-    console.log("Currrent recipe:", currentRecipe
-        
-    )
+    const recipeId = Number(id);
 
-    if (!currentRecipe) return <div>Recipe not found</div>;
+    const currentRecipe = recipes.find((recipe) => recipe.id === recipeId);
 
-    const instructions = currentRecipe.instructions 
+    console.log("Current recipe:", currentRecipe);  
+
+    if (!currentRecipe) {
+        return <div>Recipe not found for ID {id}</div>; 
+    }
+
+    const instructions = currentRecipe.instructions
         ? (Array.isArray(currentRecipe.instructions)
             ? currentRecipe.instructions
             : currentRecipe.instructions.split('\n'))
@@ -98,7 +106,7 @@ const FullRecipeDetails: React.FC = () => {
                                         ? currentRecipe.tags.split(',').map((tag: string, index: number) => (
                                           <span key={index} className="tag">{tag.trim()}</span>
                                       ))
-                                        : null // Handle case where tags is neither an array nor a string
+                                        : null
                                 }
                             </div>
                         </section>
@@ -111,13 +119,12 @@ const FullRecipeDetails: React.FC = () => {
                         <section className="recipe-rating">
                             <h2>Rating</h2>
                             <div className="rating-container">
-                                <span className="rating-value">{currentRecipe.rating}/5</span>
+                                <span className="rating-value">{currentRecipe.rating}/5 ({currentRecipe.reviewCount} reviews)</span>
                             </div>
                         </section>
                     </div>
                 </div>
             </div>
-            <MyRecipeList /> 
         </div>
     );
 };
