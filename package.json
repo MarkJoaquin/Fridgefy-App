@@ -19,6 +19,8 @@
     "concurrently": "^9.1.2"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
+    "react-redux": "^9.2.0",
     "sonner": "^1.7.2"
   }
 }

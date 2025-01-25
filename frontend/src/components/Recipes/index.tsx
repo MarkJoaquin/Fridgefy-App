@@ -88,6 +88,8 @@ const RecipeList = () => {
     }
   };
 
+  
+
   console.log("Saved recipes", savedRecipes);
 
   return (
@@ -97,6 +99,7 @@ const RecipeList = () => {
           <div key={recipe.id}>
             <img src={recipe.image} alt="pimage" />
             <h3>{recipe.name}</h3>
+            <button>Details</button>
             <button
               onClick={() => {
                 handleSaveRecipe({ recipeId: String(recipe.id), userEmail }).then(() => {
