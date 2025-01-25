@@ -76,7 +76,10 @@ const RecipeList = () => {
             <div className="img-container">
               <img src={recipe.image} alt="pimage" />  
             </div>
-            <h3>{recipe.name}</h3>
+            <div className="recipe-name">
+              <h3>{recipe.name}</h3>
+            </div>
+            
             <button 
                 className="view-button"
                 onClick={(e) => handleDetailsClick(e, recipe)}

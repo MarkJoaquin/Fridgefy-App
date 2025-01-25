@@ -207,7 +207,7 @@ const ShoppingList = () => {
 
       await dispatch(
         saveIngredient({
-          ingredients: recipe.ingredients,
+          ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients : [recipe.ingredients],
           recipeId: recipeId,
           userEmail: userEmail,
         })
