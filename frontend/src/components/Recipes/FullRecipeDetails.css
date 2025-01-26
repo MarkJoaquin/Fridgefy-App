@@ -146,15 +146,16 @@
   }
   
   .recipe-rating .rating-container {
-    background-color: #f1f1f1;
+    background-color: lightgreen;
     padding: 8px;
     border-radius: 5px;
     width: fit-content;
   }
   
   .rating-value {
-    font-size: 1.2rem;
-    color: #4CAF50;
+    font-size: 1rem;
+    color: black;
+    font-weight: 600;
   }
   
   /* Estilos responsivos para pantallas más pequeñas */
@@ -170,7 +171,10 @@
     }
   
     .recipe-quick-info {
-      grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: flex-start; /* Una sola columna en pantallas pequeñas */
     }
   
     .recipe-full-image {

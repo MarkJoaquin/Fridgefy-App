@@ -19,6 +19,7 @@ import {
 } from "../../features/ingredients/ingredientsSlice";
 import { getShoppingList } from "../../features/shoppingItems/shoppingSlice";
 import { AppDispatch } from "../../app/store";
+import { useNavigate } from 'react-router-dom';
 
 const ShoppingListContainer = styled.div`
   display: flex;
@@ -172,6 +173,7 @@ const ShoppingList = () => {
   const { savedRecipes, loading } = useSelector(selectSavedRecipes);
   const { recipes } = useSelector(selectRecipes);
   const { ingredients } = useSelector(selectSavedIngredients);
+  const navigate = useNavigate();
 
   // console.log("Saved Recipes", savedRecipes);
   // console.log("Recipes from store", recipes);
@@ -230,6 +232,10 @@ const ShoppingList = () => {
         error instanceof Error ? error.message : "Failed to save ingredients"
       );
     }
+  };
+
+  const handleViewRecipeDetails = (recipeId: string) => {
+    navigate(`/recipe/${recipeId}`);
   };
 
   if (loading) {
@@ -305,7 +311,7 @@ const ShoppingList = () => {
                     </p>
                   </div>
                   <div className="button-group">
-                    <button>View Recipe</button>
+                    <button onClick={() => handleViewRecipeDetails(String(recipe.id))}>View Recipe</button>
                     <button
                       onClick={() => {
                         handleSaveIngredients(String(recipe.id)).then(() => {
