@@ -11,7 +11,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
 
-  background-color: #16a54a;
+  background-color: mediumseagreen;
   color: #141414;
 
   padding: 1rem 2rem;
@@ -29,6 +29,7 @@ const LogoContainer = styled.div`
   img {
     width: 30px;
     height: 30px;
+    border-radius: 0;
   }
 
   @media (max-width: 768px) {
