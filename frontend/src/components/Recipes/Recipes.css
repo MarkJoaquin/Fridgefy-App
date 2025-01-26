@@ -77,8 +77,65 @@
 }
 
 @media (max-width: 768px) {
+
+    .filters {
+        margin: 0 1rem;
+    }
+
     .recipes-container {
         flex-direction: column;
         align-items: center;
     }
+
+    .filter-input {
+        width: 90%;
+    }
+
+    .filter-container {
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+    }
+
+    .filter-container div {
+        display: flex;
+        align-items: center;
+    }
+    
+    .filter-container label {
+        margin-right: 1rem;
+    }
+    .filter-dropdown {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+.filter-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 1.5rem;
+}
+
+.filter-container {
+    display: flex;
+    width: 100%;
+}
+
+.filter-container label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.filter-dropdown {
+    width: 10rem;
+    padding: 10px;
+    margin-right: 1rem;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }

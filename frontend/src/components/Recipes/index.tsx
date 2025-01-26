@@ -24,6 +24,10 @@ const RecipeList = () => {
   const { savedRecipes, loading: saveLoading} = useSelector(selectSavedRecipes);
   const [selectedRecipe, setSelectedRecipe] = useState<any>(null);
   const userEmail = user?.primaryEmailAddress?.emailAddress || "";
+  const [filterText, setFilterText] = useState<string>("");
+  const [selectedTag, setSelectedTag] = useState<string>("");
+  const [selectedMealType, setSelectedMealType] = useState<string>("");
+  const [selectedCuisine, setSelectedCuisine] = useState<string>("");
   
 
   useEffect(() => {
@@ -68,10 +72,66 @@ const RecipeList = () => {
 
   console.log("Saved recipes", savedRecipes);
 
+  const filteredRecipes = recipes.filter(recipe => {
+    return (
+      recipe.name.toLowerCase().includes(filterText.toLowerCase()) &&
+      (selectedTag ? recipe.tags?.includes(selectedTag) : true) &&
+      (selectedMealType ? recipe.mealType.includes(selectedMealType) : true) &&
+      (selectedCuisine ? recipe.cuisine === selectedCuisine : true)
+    );
+  });
+
+  const uniqueTags = Array.from(new Set(recipes.flatMap(recipe => recipe.tags || [])));
+  const uniqueMealTypes = Array.from(new Set(recipes.flatMap(recipe => recipe.mealType || [])));
+  const uniqueCuisines = Array.from(new Set(recipes.map(recipe => recipe.cuisine)));
+
   return (
     <div style={ userEmail ? {gridArea: "recipes"} : {  }}>
+      <div className="filters">
+        <input 
+          type="text" 
+          placeholder="Search Recipes" 
+          value={filterText} 
+          onChange={(e) => setFilterText(e.target.value)} 
+          className="filter-input"
+        />
+        <div className="filter-container">
+          <div>
+            <label htmlFor="tag-select">Tags</label>
+            <select id="tag-select" onChange={(e) => setSelectedTag(e.target.value)} value={selectedTag} className="filter-dropdown">
+              <option value="">All Tags</option>
+              {uniqueTags.map(tag => (
+                <option key={tag} value={tag}>{tag}</option>
+              ))}
+            </select>
+          </div>
+          
+          <div>
+            <label htmlFor="meal-type-select">Meal Types</label>
+            <select id="meal-type-select" onChange={(e) => setSelectedMealType(e.target.value)} value={selectedMealType} className="filter-dropdown">
+              <option value="">All Meal Types</option>
+              {uniqueMealTypes.map(mealType => (
+                <option key={mealType} value={mealType}>{mealType}</option>
+              ))}
+            </select>  
+          </div>
+          
+          <div>
+            <label htmlFor="cuisine-select">Cuisines</label>
+            <select id="cuisine-select" onChange={(e) => setSelectedCuisine(e.target.value)} value={selectedCuisine} className="filter-dropdown">
+              <option value="">All Cuisines</option>
+              {uniqueCuisines.map(cuisine => (
+                <option key={cuisine} value={cuisine}>{cuisine}</option>
+              ))}
+            </select>  
+          </div>
+        </div>
+      </div>
+      
+      
+
       <div className={`recipes-container ${userEmail ? "gridArea: recipes" : "recipes-container"}`}>
-        {recipes.map((recipe) => (
+        {filteredRecipes.map((recipe) => (
           <div className="recipe-card" key={recipe.id}>
             <div className="img-container">
               <img src={recipe.image} alt="pimage" />  
