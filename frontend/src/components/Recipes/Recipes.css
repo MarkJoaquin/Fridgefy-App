@@ -132,7 +132,7 @@
 }
 
 .filter-dropdown {
-    width: 10rem;
+    width: auto;
     padding: 10px;
     margin-right: 1rem;
     margin-bottom: 10px;

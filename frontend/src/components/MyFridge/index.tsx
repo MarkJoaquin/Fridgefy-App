@@ -127,7 +127,7 @@ const IngredientsManager = () => {
 };
 
 const Container = styled.div`
-  width: 100%;
+  width: 20rem;
   margin: 0 auto;
   padding: 3rem;
   background-color: white;
