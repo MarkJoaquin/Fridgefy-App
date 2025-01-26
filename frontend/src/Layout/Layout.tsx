@@ -12,6 +12,13 @@ const Main = styled.main`
   margin-top: 5rem;
   margin-bottom: 5rem;
   grid-template-rows: 1fr;
+
+  @media (max-width: 768px) {
+    grid-template: 
+      "fridge"
+      "recipes"
+      "shopping";
+  }
 `;
 
 const Layout = () => {

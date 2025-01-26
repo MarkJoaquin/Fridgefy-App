@@ -30,6 +30,10 @@ const ShoppingListContainer = styled.div`
   grid-area: recipes;
   width: 50vw;
 
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
+
   h2 {
     font-size: 24px;
     margin-bottom: 20px;

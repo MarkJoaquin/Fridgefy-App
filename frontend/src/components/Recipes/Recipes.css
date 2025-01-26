@@ -2,8 +2,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    height: 80vh;
+    align-items: flex-start;
+    height: auto;
+    padding-bottom: 20px;
 }
 
 .recipes-container .recipe-card {
@@ -73,4 +74,11 @@
 .recipes-container button:disabled:hover {
     background: rgb(230, 73, 73);
     cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .recipes-container {
+        flex-direction: column;
+        align-items: center;
+    }
 }
