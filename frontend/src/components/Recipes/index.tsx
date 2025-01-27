@@ -28,6 +28,8 @@ const RecipeList = () => {
   const [selectedTag, setSelectedTag] = useState<string>("");
   const [selectedMealType, setSelectedMealType] = useState<string>("");
   const [selectedCuisine, setSelectedCuisine] = useState<string>("");
+  const [selectedRatingRange, setSelectedRatingRange] = useState<string>("");
+  const [selectedPrepTime, setSelectedPrepTime] = useState<string>("");
   
 
   useEffect(() => {
@@ -73,11 +75,21 @@ const RecipeList = () => {
   console.log("Saved recipes", savedRecipes);
 
   const filteredRecipes = recipes.filter(recipe => {
+    const recipeRating = recipe.rating ? Number(recipe.rating) : 0;
+
     return (
       recipe.name.toLowerCase().includes(filterText.toLowerCase()) &&
       (selectedTag ? recipe.tags?.includes(selectedTag) : true) &&
       (selectedMealType ? recipe.mealType.includes(selectedMealType) : true) &&
-      (selectedCuisine ? recipe.cuisine === selectedCuisine : true)
+      (selectedCuisine ? recipe.cuisine === selectedCuisine : true) &&
+      (selectedRatingRange ? 
+        (selectedRatingRange === "lessThan3" ? recipeRating < 3 :
+        selectedRatingRange === "4to4.2" ? recipeRating >= 4 && recipeRating < 4.2 :
+        selectedRatingRange === "4.2to4.4" ? recipeRating >= 4.2 && recipeRating < 4.4 :
+        selectedRatingRange === "4.4to4.6" ? recipeRating >= 4.4 && recipeRating < 4.6 :
+        selectedRatingRange === "4.6to4.8" ? recipeRating >= 4.6 && recipeRating < 4.8 :
+        selectedRatingRange === "4.8to5" ? recipeRating >= 4.8 && recipeRating <= 5 : true) : true) &&
+      (selectedPrepTime ? recipe.prepTimeMinutes === Number(selectedPrepTime) : true)
     );
   });
 
@@ -124,6 +136,27 @@ const RecipeList = () => {
                 <option key={cuisine} value={cuisine}>{cuisine}</option>
               ))}
             </select>  
+          </div>
+          
+          <div>
+            <label htmlFor="rating-select">Rating</label>
+            <select id="rating-select" onChange={(e) => setSelectedRatingRange(e.target.value)} value={selectedRatingRange} className="filter-dropdown">
+                <option value="">All Ratings</option>
+                <option value="4to4.2">4 - 4.2</option>
+                <option value="4.2to4.4">4.2 - 4.4</option>
+                <option value="4.4to4.6">4.4 - 4.6</option>
+                <option value="4.6to4.8">4.6 - 4.8</option>
+                <option value="4.8to5">4.8 - 5</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="prep-time-select">Prep Time</label>
+            <select id="prep-time-select" onChange={(e) => setSelectedPrepTime(e.target.value)} value={selectedPrepTime} className="filter-dropdown">
+              <option value="">All Prep Times</option>
+              <option value="15">Under 15 mins</option>
+              <option value="30">Under 30 mins</option>
+            </select>
           </div>
         </div>
       </div>
