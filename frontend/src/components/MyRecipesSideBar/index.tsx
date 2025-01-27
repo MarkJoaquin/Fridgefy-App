@@ -29,7 +29,7 @@ const MyRecipesSideBar = () => {
 
   return (
     <SideBarContainer>
-      <Title>My Recipes</Title>
+      {userEmail && <Title>My Recipes</Title>}
       <RecipeList>
         {savedRecipesDetails.map((recipe) => (
           <Link to={`/shopping-list`} style={{ textDecoration: 'none' }}>

@@ -143,6 +143,7 @@ const RecipeList = () => {
             <button 
                 className="view-button"
                 onClick={(e) => handleDetailsClick(e, recipe)}
+                disabled={!userEmail}
               >
                 Details
             </button>
