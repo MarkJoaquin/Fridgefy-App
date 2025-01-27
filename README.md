@@ -182,3 +182,4 @@ Remember, while a fully working app is not the primary expectation, your effort 
 6. If you encounter difficulties, don't hesitate to ask for help or clarification.
 
 Remember, the journey of building this project is just as important as the destination. Your effort, learning, and growth throughout this process are what truly matter. Good luck, and enjoy the process of bringing Fridgefy to life!
+# Fridgefy-App
