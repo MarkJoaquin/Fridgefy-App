@@ -40,11 +40,11 @@ const SaveUserOnLogin = () => {
       }
 
       setIsUserSaved(true); // Marca al usuario como guardado
-      console.log("User saved successfully");
+      ("User saved successfully");
 
     } catch (error : any) {
       setError(error.message);
-      console.log("Error saving user:", error );
+      ("Error saving user:", error );
     }
   };
 

@@ -10,19 +10,19 @@ const FullRecipeDetails: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { id } = useParams<{ id: string }>();
 
-    console.log("Recipe ID from URL:", id);  
+    ("Recipe ID from URL:", id);  
 
     const { recipes, loading, error } = useSelector((state: RootState) => state.recipes);
 
-    console.log("Recetas desde el estado:", recipes);
+    ("Recetas desde el estado:", recipes);
 
     useEffect(() => {
         
         if (recipes.length === 0) {
-            console.log("No recipes found in state, fetching...");
+            ("No recipes found in state, fetching...");
             dispatch(fetchRecipes());
         } else {
-            console.log("Recipes already loaded.");
+            ("Recipes already loaded.");
         }
     }, [dispatch, recipes.length]);
 
@@ -36,7 +36,7 @@ const FullRecipeDetails: React.FC = () => {
 
     const currentRecipe = recipes.find((recipe) => recipe.id === recipeId);
 
-    console.log("Current recipe:", currentRecipe);  
+    ("Current recipe:", currentRecipe);  
 
     if (!currentRecipe) {
         return <div>Recipe not found for ID {id}</div>; 

@@ -8,73 +8,83 @@
 }
 
 .recipes-container .recipe-card {
-    margin: 10px;
-    padding-bottom: 15px;
-    /* border: 1px solid #ccc; */
-    border-radius: 5px;
-    max-width: 250px;
-    min-width: 200px;
-    height: 360px;
+    margin: 15px;
+    padding-bottom: 30px;
+    /* border: 2px solid #f8f9fa; */ 
+    background-color: white;
+    border-radius: 15px;
+    max-width: 300px;
+    min-width: 250px;
+    height: 450px;
     text-align: center;
-    background-color: linen;
-}
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;}
 
 .recipes-container img {
     max-width: 100%;
     height: auto;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .recipes-container .recipe-name {
-    padding:  0.5rem;
-    height: auto;
-    
+    padding: 1rem;
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .recipes-container h3 {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #1a1a1a;
+    line-height: 1.6;
 }
 
 .recipes-container .view-button {
     color: #141414;
     border: none;
-    padding: 5px 10px;
-    border-radius: 5px 0 0 5px;
+    padding: 8px 15px;
+    border-radius: 20px; 
     cursor: pointer;
-    background-color: lightgrey;
+    background-color: rgba(39, 67, 13, 0.1);
     font-size: small;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .recipes-container .view-button:hover {
-    background-color: mediumseagreen;
+    background-color: rgba(39, 67, 13, 0.2); 
+    transform: translateY(-1px);
 }
 
 .recipes-container .save-button {
     color: #141414;
     border: none;
-    padding: 5px 10px;
-    border-radius: 0 5px 5px 0;
+    padding: 8px 15px;
+    border-radius: 20px; 
     cursor: pointer;
-    background-color: rgb(162, 198, 179);
+    background-color: rgba(38, 184, 106, 0.363);
     font-size: small;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .recipes-container .save-button:hover {
-    background-color: mediumseagreen;
+    background-color: rgba(162, 198, 179, 0.2); 
+    transform: translateY(-1px);
 }
 
 .recipes-container button:disabled {
-    background: rgb(234, 169, 169);
+    opacity: 0.8; 
+    background-color: #e6afaf;
     cursor: not-allowed;
 }
 
 .recipes-container button:disabled:hover {
-    background: rgb(230, 73, 73);
-    cursor: not-allowed;
+    background-color: #e6afaf;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 
 @media (max-width: 768px) {
 
@@ -121,7 +131,6 @@
 }
 
 .filter-container {
-    padding: 1rem;
     display: flex;
     width: 100%;
 }
@@ -133,7 +142,7 @@
 }
 
 .filter-dropdown {
-    width: auto;
+    width: 10rem;
     padding: 10px;
     margin-right: 1rem;
     margin-bottom: 10px;

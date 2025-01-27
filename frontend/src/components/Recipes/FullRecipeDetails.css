@@ -53,13 +53,14 @@
   .recipe-main-info {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
     margin-bottom: 20px;
 
   }
   
   .recipe-full-image {
-    width: 100%;
+    max-width: 35rem;
     border-radius: 8px;
     
   }

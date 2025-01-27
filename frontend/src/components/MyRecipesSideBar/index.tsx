@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchSavedRecipes,
-} from "../../features/savedRecipes/savedRecipesSlice";
+import { fetchSavedRecipes } from "../../features/savedRecipes/savedRecipesSlice";
 import { useUser } from "@clerk/clerk-react";
 import { AppDispatch } from "../../app/store";
 import { selectSavedRecipes } from "../../features/savedRecipes/savedRecipesSlice";
@@ -18,10 +16,12 @@ const MyRecipesSideBar = () => {
   const { recipes } = useSelector(selectRecipes);
 
   const savedRecipesDetails = recipes.filter((recipe) =>
-    savedRecipes.map((savedRecipe) => savedRecipe.recipeId).includes(String(recipe.id))
+    savedRecipes
+      .map((savedRecipe) => savedRecipe.recipeId)
+      .includes(String(recipe.id))
   );
 
-  console.log("savedRecipesDetails", savedRecipesDetails);
+  ("savedRecipesDetails", savedRecipesDetails);
 
   useEffect(() => {
     dispatch(fetchSavedRecipes(String(userEmail)));
@@ -32,8 +32,8 @@ const MyRecipesSideBar = () => {
       {userEmail && <Title>My Recipes</Title>}
       <RecipeList>
         {savedRecipesDetails.map((recipe) => (
-          <Link to={`/shopping-list`} style={{ textDecoration: 'none' }}>
-            <RecipeItem>
+          <Link to={`/shopping-list`} style={{ textDecoration: "none" }}>
+            <RecipeItem key={recipe.id}>
               <RecipeImage src={recipe.image} alt={recipe.name} />
               <RecipeTitle>{recipe.name}</RecipeTitle>
             </RecipeItem>

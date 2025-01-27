@@ -3,6 +3,7 @@ import Navbar from "../components/NavBar";
 import MyFridge from "../components/MyFridge";
 import styled from "styled-components";
 import { useUser } from "@clerk/clerk-react";
+import { useLocation } from "react-router-dom";
 
 const Main = styled.main`
   display: grid;
@@ -10,7 +11,6 @@ const Main = styled.main`
   gap: 1rem;
   margin-top: 5rem;
   margin-bottom: 5rem;
-
 
   @media (max-width: 768px) {
     grid-template:
@@ -28,10 +28,16 @@ const Main = styled.main`
 
 const Layout = () => {
   const { user } = useUser();
+  const location = useLocation();
+
   return (
     <>
       <Navbar />
-      {user ? (
+      {user && location.pathname === "/" ? (
+        <Main style={{ display: "flex", flexDirection: "column", marginTop: "0" }}>
+          <Outlet />
+        </Main>
+      ) : user && location.pathname !== "/" ? (
         <Main>
           <MyFridge />
           <Outlet />

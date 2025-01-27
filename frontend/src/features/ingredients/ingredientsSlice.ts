@@ -31,7 +31,7 @@ export const getIngredients = createAsyncThunk(
       throw new Error("Failed to fetch ingredients");
     }
     const data = await response.json();
-    console.log("Ingredients from backend", data.ingredients);
+    ("Ingredients from backend", data.ingredients);
     return data.ingredients;
   }
 );

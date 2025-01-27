@@ -29,7 +29,7 @@ const fetchRecipes = async (setData:any) => {
         const renderRecipes = randomArray(data.recipes)
         const recipesData = renderRecipes.slice(0,3)
         setData(recipesData)
-        console.log('RECIPES: ', recipesData )
+        ('RECIPES: ', recipesData )
     } catch (error) {
         console.error('Error fetching recipes: ', error)
     }

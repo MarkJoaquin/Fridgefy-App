@@ -1,34 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import axios from "axios";
+import { fetchRecipes as fetchRecipesFromBackend, Recipe } from "../../../../backend/src/utilities/fetchRecipes";
 
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async () => {
-    const response = await axios.get("https://dummyjson.com/recipes?limit=0"); // move to backend
-    console.log("API Response:", response.data);
-    return (response.data as { recipes: Recipe[] }).recipes;
+    const response = await fetchRecipesFromBackend();
+    return response;
   }
 );
-
-type Recipe = {
-  id: string ;
-  name: string;
-  ingredients: string[] | string;
-  instructions: string[] | string;
-  prepTimeMinutes: number;
-  cookTimeMinutes: number;
-  servings: number;
-  difficulty: "Easy" | "Medium" | "Hard";
-  cuisine: string;
-  caloriesPerServing: number;
-  tags?: string[] | string;
-  userId: number;
-  image: string;
-  rating: number;
-  reviewCount: number;
-  mealType: string[];
-};
 
 interface RecipeState {
   recipes: Recipe[];
@@ -63,6 +43,5 @@ const recipeSlice = createSlice({
   },
 });
 
-// export const {} = recipeSlice.actions;
 export const selectRecipes = (state: RootState) => state.recipes;
 export default recipeSlice.reducer;

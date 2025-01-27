@@ -170,18 +170,18 @@ type Recipe = {
 const ShoppingList = () => {
   const { user } = useUser();
   const dispatch = useDispatch<AppDispatch>();
-  const { savedRecipes, loading } = useSelector(selectSavedRecipes);
+  const { savedRecipes } = useSelector(selectSavedRecipes);
   const { recipes } = useSelector(selectRecipes);
   const { ingredients } = useSelector(selectSavedIngredients);
   const navigate = useNavigate();
 
-  // console.log("Saved Recipes", savedRecipes);
-  // console.log("Recipes from store", recipes);
-  // console.log("Ingredients from user", ingredients);
+  // ("Saved Recipes", savedRecipes);
+  // ("Recipes from store", recipes);
+  // ("Ingredients from user", ingredients);
 
   const userEmail = user?.primaryEmailAddress?.emailAddress || "";
 
-  console.log("ingredients", ingredients);
+  ("ingredients", ingredients);
 
   const isIngredientSaved = (ingredient: string) => {
     return ingredients.some(
@@ -203,7 +203,7 @@ const ShoppingList = () => {
       .includes(String(recipe.id))
   );
 
-  console.log("Saved Recipe Details", savedRecipeDetails);
+  ("Saved Recipe Details", savedRecipeDetails);
 
   const handleSaveIngredients = async (recipeId: string) => {
     try {
@@ -237,10 +237,6 @@ const ShoppingList = () => {
   const handleViewRecipeDetails = (recipeId: string) => {
     navigate(`/recipe/${recipeId}`);
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (!userEmail) {
     return <div>Please sign in to view your shopping list</div>;

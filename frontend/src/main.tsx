@@ -9,7 +9,6 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import { dark } from "@clerk/themes";
 import SingIn from "./components/SingIn/index.tsx";
 import SignUp from "./components/Sigup/index.tsx";
-// import NonSignedInRecipes from "./components/NonSignedInRecipes/index.tsx";
 import RecipeList from "./components/Recipes/index.tsx";
 
 import { Provider } from "react-redux";
@@ -18,7 +17,6 @@ import FullRecipeDetails from "./components/Recipes/FullRecipeDescription.tsx";
 import ShoppingList from "./components/ShoppigList/index.tsx";
 import ItemsToBuy from "./components/ItemToBuy/index.tsx";
 import MyRecipesSideBar from "./components/MyRecipesSideBar/index.tsx";
-
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_PUBLISHABLE_KEY;
 
@@ -45,7 +43,7 @@ const router = createBrowserRouter([
         element: (
           <>
             <RecipeList />
-             <MyRecipesSideBar />
+            <MyRecipesSideBar />
           </>
         ),
       },
@@ -56,9 +54,9 @@ const router = createBrowserRouter([
             <FullRecipeDetails />
             <MyRecipesSideBar />
           </>
-        )
+        ),
       },
-      
+
       {
         path: "/",
         element: <Hero />,
@@ -72,7 +70,6 @@ const router = createBrowserRouter([
           </>
         ),
       },
-      
     ],
   },
 ]);

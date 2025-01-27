@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import { AppDispatch } from "../../app/store";
 import {
   saveIndividualIngredient,
@@ -133,7 +133,7 @@ const Container = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-height: 30rem;
+  min-height: 30rem;
 
 
   h2 {

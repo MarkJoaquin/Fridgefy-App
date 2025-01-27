@@ -37,7 +37,7 @@ export const registerUser = async (
       }
     });
 
-    console.log("User created successfully");
+    ("User created successfully");
 
     return res.status(201).json({
       status: "success",

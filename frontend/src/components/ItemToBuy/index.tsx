@@ -14,7 +14,7 @@ const ItemsToBuy = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useUser();
   const userEmail = user?.primaryEmailAddress?.emailAddress;
-  const { items, loading, error } = useSelector(selectShoppingList);
+  const { items,  error } = useSelector(selectShoppingList);
 
   useEffect(() => {
     if (userEmail) {
@@ -35,7 +35,6 @@ const ItemsToBuy = () => {
     }
   };
 
-  if (loading) return <div className="container">Loading...</div>;
   if (error) return <div className="container">Error: {error}</div>;
 
   return (
@@ -64,14 +63,15 @@ const ItemsToBuy = () => {
 };
 
 const Container = styled.div`
-  padding: 1rem;
   background-color: #f5f5f5;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   display: flex;
   flex-direction: column;
-  margin-top: 1rem;
+  margin: 0 auto;
+  padding: 5rem;
+  min-height: 30rem;
 `;
 
 const ItemList = styled.ul`

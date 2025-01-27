@@ -67,7 +67,7 @@ const StyledNavLink = styled(NavLink)`
 
 const Navbar = () => {
   const user = useUser();
-  // console.log(user);
+  // (user);
 
   return (
     <Nav>
