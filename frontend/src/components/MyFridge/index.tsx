@@ -10,6 +10,7 @@ import {
 import { useUser } from "@clerk/clerk-react";
 import { fetchRecipes, selectRecipes } from "../../features/recipes/recipeSlice";
 import { selectSavedIngredients, deleteIngredient } from "../../features/ingredients/ingredientsSlice";
+import { getShoppingList } from "../../features/shoppingItems/shoppingSlice";
 
 const IngredientsManager = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -48,6 +49,7 @@ const IngredientsManager = () => {
           ingredient: ingredient,
         })
       ).unwrap();
+      dispatch(getShoppingList(userEmail));
       toast.success("Ingredient added successfully");
     } catch (error) {
       console.error("Failed to add ingredient", error);
@@ -120,8 +122,6 @@ const IngredientsManager = () => {
           </IngredientItem>
         ))}
       </IngredientsList>
-
-      <Toaster position="bottom-right" richColors  />
     </Container>
   );
 };
@@ -133,6 +133,7 @@ const Container = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 30rem;
 
 
   h2 {

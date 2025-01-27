@@ -30,6 +30,7 @@ const ItemsToBuy = () => {
       toast.success("Item removed from shopping list");
       dispatch(getShoppingList(userEmail));
     } catch (error) {
+      console.error("Failed to remove item", error);
       toast.error("Failed to remove item");
     }
   };
@@ -50,7 +51,7 @@ const ItemsToBuy = () => {
                 className="delete-button"
                 onClick={() => handleDeleteItem(item.ingredient)}
               >
-                -
+                x
               </DeleteButton>
             </Item>
           ))}
@@ -96,17 +97,16 @@ const ItemText = styled.span`
 `;
 
 const DeleteButton = styled.button`
-  background-color: lightcoral;
-  color: #fff;
+   background: none;
   border: none;
-  border-radius: 50%;
-  padding: 0.5rem 1rem;
-  
-  font-size: 0.875rem;
+  color: #ff4444;
+  font-size: 20px;
   cursor: pointer;
+  padding: 0 8px;
+  transition: transform 0.2s;
 
   &:hover {
-    background-color: #c62828;
+    transform: scale(1.2);
   }
 `;
 

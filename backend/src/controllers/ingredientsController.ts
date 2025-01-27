@@ -1,4 +1,4 @@
-import e, { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { error } from "console";
 
@@ -96,11 +96,6 @@ export const saveIndividualIngredient = async (
         status: "error",
         message: "Ingredient already exists in the fridge"
       });
-    } else if (existingShoppingItems.includes(ingredient.toLowerCase())) {
-      return res.status(400).json({
-        status: "error",
-        message: "Ingredient already exists in the shopping list"
-      });
     } else {
       await prisma.fridge.create({
         data: {
@@ -108,20 +103,29 @@ export const saveIndividualIngredient = async (
           ingredient: String(ingredient)
         }
       });
+    }
 
-      return res.status(201).json({
-        status: "success",
-        message: "Ingredient saved successfully",
-        fridgeSaved: {
-          ingredient: ingredient,
-          userId: user.id
+    if (existingShoppingItems.includes(ingredient.toLowerCase())) {
+      await prisma.shoppingItems.deleteMany({
+        where: {
+          userId: user.id,
+          ingredient: String(ingredient)
         }
       });
     }
+
+    return res.status(201).json({
+      status: "success",
+      message: "Ingredient saved successfully",
+      fridgeSaved: {
+        ingredient: ingredient,
+        userId: user.id
+      }
+    });
   } catch (error) {
     return res.status(500).json({
       status: "error",
-      message: "Error saving ingredient",
+      message: "Error saving ingredient"
     });
   }
 };
@@ -140,7 +144,11 @@ export const saveIngredient = async (
     });
   }
 
-  if (!ingredientsToSave || !Array.isArray(ingredientsToSave) || ingredientsToSave.length === 0) {
+  if (
+    !ingredientsToSave ||
+    !Array.isArray(ingredientsToSave) ||
+    ingredientsToSave.length === 0
+  ) {
     return res.status(400).json({
       status: "error",
       message: "Valid ingredients array is required"
@@ -171,34 +179,17 @@ export const saveIngredient = async (
       item.ingredient.toLowerCase()
     );
 
-    const newIngredientsToFridge: string[] = [];
     const newIngredientsToShoppingList: string[] = [];
 
     for (const ingredient of ingredientsToSave) {
       const normalizedIngredient = ingredient.toLowerCase().trim();
 
-      if (!existingFridgeIngredients.includes(normalizedIngredient)) {
-        if (!existingShoppingItems.includes(normalizedIngredient)) {
-          newIngredientsToShoppingList.push(ingredient);
-        }
-      } else {
-        newIngredientsToFridge.push(ingredient);
+      if (!existingFridgeIngredients.includes(normalizedIngredient) && 
+          !existingShoppingItems.includes(normalizedIngredient)) {
+        newIngredientsToShoppingList.push(ingredient);
       }
     }
 
-    // Guardar nuevos ingredientes en el frigorífico
-    for (const ingredient of newIngredientsToFridge) {
-      await prisma.fridge.create({
-        data: {
-          ingredient: String(ingredient),
-          user: {
-            connect: { email: String(userEmail) }
-          }
-        }
-      });
-    }
-
-    // Guardar nuevos ingredientes en la lista de compras
     for (const ingredient of newIngredientsToShoppingList) {
       await prisma.shoppingItems.create({
         data: {
@@ -210,18 +201,13 @@ export const saveIngredient = async (
       });
     }
 
-    const updatedUser = await prisma.user.findUnique({
-      where: { email: String(userEmail) },
-      include: {
-        fridges: true
-      }
-    });
-
     return res.status(200).json({
       status: "success",
       message: "Ingredients processed successfully",
-      fridgeSaved: newIngredientsToFridge,
-      shoppingListSaved: newIngredientsToShoppingList
+      shoppingListSaved: newIngredientsToShoppingList,
+      skippedIngredients: ingredientsToSave.filter(ingredient => 
+        existingFridgeIngredients.includes(ingredient.toLowerCase().trim())
+      )
     });
   } catch (error) {
     return res.status(500).json({

@@ -331,7 +331,7 @@ const ShoppingList = () => {
                     >
                       Remove Recipe
                     </button>
-                    <Toaster position="bottom-right" richColors expand={true} />
+                    <Toaster position="bottom-right" />
                   </div>
                 </details>
               ))

@@ -13,7 +13,7 @@ import { AppDispatch } from "../../app/store";
 import './Recipes.css';
 // import { RecipesContainer } from './Recipes';
 import { useUser } from "@clerk/clerk-react";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import RecipeDetail from "./RecipeDetail";
 
 
@@ -199,7 +199,6 @@ const RecipeList = () => {
                 onClose={closeDetails} 
             />
           )}
-      <Toaster richColors position="bottom-right" />
     </div>
   </div>
   );
