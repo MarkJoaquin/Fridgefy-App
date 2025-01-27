@@ -123,7 +123,7 @@ const RecipeList = () => {
           onChange={(e) => setFilterText(e.target.value)}
           className="filter-input"
         />
-        <div className="filter-container">
+        <div className="filter-container" style={ userEmail ? {} : { paddingTop: "2rem", paddingLeft: "7rem"}}>
           <div>
             <label htmlFor="tag-select">Tags</label>
             <select
