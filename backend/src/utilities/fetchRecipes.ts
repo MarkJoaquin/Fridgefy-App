@@ -1,4 +1,4 @@
-
+/* 
 export interface Recipe {
     id: string ;
     name: string;
@@ -22,3 +22,4 @@ export const fetchRecipes = async () => {
   const data = await response.json();
   return (data as { recipes: Recipe[] }).recipes;
 };
+ */

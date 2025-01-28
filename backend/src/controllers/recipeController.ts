@@ -1,11 +1,45 @@
 import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { Recipe } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 interface recipeId {
   recipeId: string;
 }
+
+export interface Recipe {
+  id: string;
+  name: string;
+  ingredients: string[] | string;
+  instructions: string[] | string;
+  prepTimeMinutes: number;
+  cookTimeMinutes: number;
+  servings: number;
+  difficulty: "Easy" | "Medium" | "Hard";
+  cuisine: string;
+  caloriesPerServing: number;
+  tags?: string[] | string;
+  userId: number;
+  image: string;
+  rating: number;
+  reviewCount: number;
+  mealType: string[];
+}
+
+export const getAllRecipes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const response = await fetch("https://dummyjson.com/recipes?limit=0");
+    const data = await response.json();
+    return (data as { recipes: Recipe[] }).recipes;
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch recipes" });
+  }
+};
 
 export const saveRecipe = async (
   req: Request,
@@ -26,7 +60,7 @@ export const saveRecipe = async (
       where: { email: userEmail }
     });
 
-    (user);
+    user;
 
     if (!user) {
       return res.status(400).json({

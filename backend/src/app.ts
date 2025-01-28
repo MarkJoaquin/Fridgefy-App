@@ -18,6 +18,9 @@ app.get("/", (req: Request, res: Response) => {
 // For Authentication
 app.use('/saveDataUser', authRouter);
 
+// For getting all recipes
+app.use('/getAllRecipes', recipeRouter);
+
 // For recipes
 app.use('/saveRecipe', recipeRouter); 
 app.use('/getSavedRecipes', recipeRouter);
