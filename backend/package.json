@@ -26,9 +26,11 @@
     "lint-staged": "^15.2.0",
     "prettier": "^3.2.4",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "prisma": "^6.2.1"
   },
   "scripts": {
+    "postinstall": "prisma generate",
     "setup": "npm i && husky install",
     "dev": "tsnd --inspect -- src/index.ts && npx prisma generate",
     "test": "jest --coverage --passWithNoTests",
