@@ -33,7 +33,6 @@
     "dev": "tsnd --inspect -- src/index.ts && npx prisma generate",
     "test": "jest --coverage --passWithNoTests",
     "build": "npx prisma generate && tsc --inspect -- src/index.ts",
-    "vercel-build": "npx prisma generate && tsc --inspect -- src/index.ts",
     "start": "npm run build && NODE_ENV=production node build"
   },
   "lint-staged": {
