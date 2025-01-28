@@ -32,7 +32,8 @@
     "setup": "npm i && husky install",
     "dev": "tsnd --inspect -- src/index.ts && npx prisma generate",
     "test": "jest --coverage --passWithNoTests",
-    "build": "tsc && npx prisma generate",
+    "build": "npx prisma generate && tsc --inspect -- src/index.ts",
+    "vercel-build": "npx prisma generate && tsc --inspect -- src/index.ts",
     "start": "npm run build && NODE_ENV=production node build"
   },
   "lint-staged": {
