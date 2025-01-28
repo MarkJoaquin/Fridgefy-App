@@ -33,14 +33,14 @@ export const getAllRecipes = async (
   next: NextFunction
 ) => {
   try {
-    const response = await fetch("https://dummyjson.com/recipes?limit=0");
+    const response = await fetch("https://dummyjson.com/recipes?limit=10", {
+    });
     const data = await response.json();
     return (data as { recipes: Recipe[] }).recipes;
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch recipes" });
   }
 };
-
 export const saveRecipe = async (
   req: Request,
   res: Response,
