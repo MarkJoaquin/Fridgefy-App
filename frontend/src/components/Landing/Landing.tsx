@@ -60,7 +60,7 @@ const Landing = () => {
               Register Now
             </StyledNavLinkBtn>
             <StyledNavLink to="/signin" className={styles.lightButton}>
-              Sing In here
+              Sign In here
             </StyledNavLink>
           </div>
         </div>

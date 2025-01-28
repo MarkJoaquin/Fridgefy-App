@@ -94,7 +94,7 @@ const Navbar = () => {
           <UserButton appearance={{ baseTheme: dark }} />
         ) : (
           <StyledNavLink to="/signin">
-            <li>Sing In</li>
+            <li>Sign In</li>
           </StyledNavLink>
         )}
       </Ul>

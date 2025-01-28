@@ -6,7 +6,7 @@ import ErrorPage from "./components/ErrorPage";
 import Hero from "./components/Hero";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ClerkProvider } from "@clerk/clerk-react";
-import { dark } from "@clerk/themes";
+import { dark, neobrutalism } from "@clerk/themes";
 import SingIn from "./components/SingIn/index.tsx";
 import SignUp from "./components/Sigup/index.tsx";
 import RecipeList from "./components/Recipes/index.tsx";
@@ -78,7 +78,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
-      appearance={{ baseTheme: dark }}
+      appearance={{ baseTheme: neobrutalism }}
     >
       <Provider store={store}>
         <RouterProvider router={router} />
