@@ -50,7 +50,6 @@ const RecipeList = () => {
 
   const handleDetailsClick = (e: React.MouseEvent, recipe: Recipe) => {
     e.stopPropagation();
-    ("Details button clicked for recipe:", recipe);
     setSelectedRecipe(recipe);
   };
 
@@ -58,7 +57,6 @@ const RecipeList = () => {
     recipeId: string;
     userEmail: string;
   }) => {
-    ("Saving recipe", recipeData);
     try {
       await dispatch(saveRecipe(recipeData)).unwrap();
       toast.success("Recipe saved successfully!");
@@ -72,7 +70,6 @@ const RecipeList = () => {
     setSelectedRecipe(null);
   };
 
-  ("Saved recipes", savedRecipes);
 
   const filteredRecipes = recipes.filter((recipe) => {
     const recipeRating = recipe.rating ? Number(recipe.rating) : 0;

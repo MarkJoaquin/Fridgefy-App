@@ -327,7 +327,6 @@ const ShoppingList = () => {
                     >
                       Remove Recipe
                     </button>
-                    <Toaster position="bottom-right" />
                   </div>
                 </details>
               ))
