@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/", saveRecipe);
 router.get("/", getSavedRecipes);
-router.get('/getAllRecipes', getAllRecipes)
+router.get('/all', getAllRecipes)
 router.delete("/", deleteRecipe);
 
 export default router;

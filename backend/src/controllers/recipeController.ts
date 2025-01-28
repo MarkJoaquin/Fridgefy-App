@@ -34,8 +34,8 @@ export const getAllRecipes = async (
 ) => {
   try {
     const recipes = await fetchRecipes();
-    console.log(recipes);
-    return recipes;
+
+    res.status(200).json(recipes);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch recipes" });
   }
