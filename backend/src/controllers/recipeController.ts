@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { Recipe } from "@prisma/client";
+import { fetchRecipes } from "../utilities/fetchRecipes";
 
 const prisma = new PrismaClient();
 
@@ -33,10 +33,9 @@ export const getAllRecipes = async (
   next: NextFunction
 ) => {
   try {
-    const response = await fetch("https://dummyjson.com/recipes?limit=10", {
-    });
-    const data = await response.json();
-    return (data as { recipes: Recipe[] }).recipes;
+    const recipes = await fetchRecipes();
+    console.log(recipes);
+    return recipes;
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch recipes" });
   }
