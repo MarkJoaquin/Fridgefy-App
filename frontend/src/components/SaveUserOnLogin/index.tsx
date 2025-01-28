@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const SaveUserOnLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const [isUserSaved, setIsUserSaved] = useState(false); // Estado para recordar si el usuario ha sido guardado
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const { isLoaded, isSignedIn, user } = useUser();
 
@@ -27,7 +28,7 @@ const SaveUserOnLogin = () => {
 
   const saveUserToDatabase = async (userData: { email: string; name: string }) => {
     try {
-      const response = await fetch("http://localhost:3000/saveDataUser", {
+      const response = await fetch(`${apiUrl}/apiUrl/saveDataUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,11 +41,9 @@ const SaveUserOnLogin = () => {
       }
 
       setIsUserSaved(true); // Marca al usuario como guardado
-      ("User saved successfully");
 
     } catch (error : any) {
       setError(error.message);
-      ("Error saving user:", error );
     }
   };
 

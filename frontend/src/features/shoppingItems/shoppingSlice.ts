@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+const apiUrl = import.meta.env.VITE_API_URL; 
 
 interface ShoppingItem {
   ingredient: string;
@@ -21,7 +22,7 @@ export const getShoppingList = createAsyncThunk(
   'shopping/getShoppingList',
   async (userEmail: string) => {
     const response = await fetch(
-      `http://localhost:3000/getShoppingList?userEmail=${userEmail}`
+      `${apiUrl}/getShoppingList?userEmail=${userEmail}`
     );
     if (!response.ok) {
       throw new Error('Failed to fetch shopping list');
@@ -34,7 +35,7 @@ export const getShoppingList = createAsyncThunk(
 export const deleteShoppingItem = createAsyncThunk(
   'shopping/deleteShoppingItem',
   async ({ userEmail, ingredient }: { userEmail: string; ingredient: string }) => {
-    const response = await fetch('http://localhost:3000/deleteShoppingItem', {
+    const response = await fetch(`${apiUrl}/deleteShoppingItem`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

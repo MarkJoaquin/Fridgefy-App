@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 interface SavedRecipe {
   recipeId: string;
@@ -21,7 +22,7 @@ const initialState: SavedRecipesState = {
 export const saveRecipe = createAsyncThunk(
   "recipes/saveRecipe",
   async (recipeData: SavedRecipe) => {
-    const response = await fetch("http://localhost:3000/saveRecipe", {
+    const response = await fetch(`${apiUrl}/saveRecipe`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +43,7 @@ export const fetchSavedRecipes = createAsyncThunk(
   "savedRecipes/fetchSavedRecipes",
   async (userEmail: string) => {
     const response = await fetch(
-      `http://localhost:3000/getSavedRecipes?userEmail=${userEmail}`
+      `${apiUrl}/getSavedRecipes?userEmail=${userEmail}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch saved recipes");
@@ -55,7 +56,7 @@ export const fetchSavedRecipes = createAsyncThunk(
 export const deleteRecipe = createAsyncThunk(
   "savedRecipes/deleteRecipe",
   async (recipeData: SavedRecipe) => {
-    const response = await fetch("http://localhost:3000/deleteRecipe", {
+    const response = await fetch(`${apiUrl}/deleteRecipe`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 type SavedIngredient = {
   ingredient: string;
@@ -25,13 +26,12 @@ export const getIngredients = createAsyncThunk(
   "ingredients/getIngredients",
   async (userEmail: string) => {
     const response = await fetch(
-      `http://localhost:3000/savedIngredients?userEmail=${userEmail}`
+      `${apiUrl}/savedIngredients?userEmail=${userEmail}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch ingredients");
     }
     const data = await response.json();
-    ("Ingredients from backend", data.ingredients);
     return data.ingredients;
   }
 );
@@ -43,7 +43,7 @@ export const saveIngredient = createAsyncThunk(
     recipeId: string;
     userEmail: string;
   }) => {
-    const response = await fetch("http://localhost:3000/saveIngredient", {
+    const response = await fetch(`${apiUrl}/saveIngredient`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export const saveIndividualIngredient = createAsyncThunk(
   "ingredients/saveIndividualIngredient",
   async (ingredientData: SavedIngredient) => {
     const response = await fetch(
-      "http://localhost:3000/saveIndividualIngredient/saveIndividualIngredient",
+      `${apiUrl}/saveIndividualIngredient/saveIndividualIngredient`,
       {
         method: "POST",
         headers: {
@@ -85,7 +85,7 @@ export const saveIndividualIngredient = createAsyncThunk(
 export const deleteIngredient = createAsyncThunk(
   "ingredients/deleteIngredient",
   async ({ userEmail, ingredient }: { userEmail: string; ingredient: string }) => {
-    const response = await fetch("http://localhost:3000/deleteIngredient", {
+    const response = await fetch(`${apiUrl}/deleteIngredient`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
