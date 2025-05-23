@@ -33,7 +33,7 @@
     "dev": "tsnd --inspect -- src/index.ts",
     "test": "jest --coverage --passWithNoTests",
     "build": "tsc",
-    "start": "npm run build && NODE_ENV=production node build"
+    "start": "node build/index.js"
   },
   "lint-staged": {
     "*.ts": [
