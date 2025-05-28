@@ -1,23 +1,17 @@
 {
   "version": 2,
+  "buildCommand": "tsc",
+  "installCommand": "npm install",
   "builds": [
     {
-      "src": "src/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "buildCommand": "npm run build"
-      }
+      "src": "build/index.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/index.ts"
+      "dest": "build/index.js"
     }
-  ],
-  "functions": {
-    "src/index.ts": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  ]
 }
