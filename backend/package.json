@@ -32,8 +32,9 @@
     "setup": "npm i && husky install",
     "dev": "tsnd --inspect -- src/index.ts",
     "test": "jest --coverage --passWithNoTests",
-    "build": "tsc",
-    "start": "node build/index.js"
+    "build": "prisma generate && tsc",
+    "start": "node build/index.js",
+    "postinstall": "prisma generate"
   },
   "lint-staged": {
     "*.ts": [
